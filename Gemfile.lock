@@ -126,7 +126,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   ember-rails
   haml-rails
-  jquery-rails (~> 1.0.19)
+  jquery-rails
   rails (= 3.2.12)
   sass-rails (~> 3.2.3)
   sqlite3
