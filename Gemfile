@@ -18,6 +18,7 @@ group :assets do
 end
 
 gem 'jquery-rails', '~>1.0.19'
+gem 'anjlab-bootstrap-rails', '>= 2.3', :require => 'bootstrap-rails'
 
 # To use debugger
 # gem 'debugger'
