@@ -19,4 +19,4 @@ TweetGlobe.ready = ->
   TweetGlobe.tweetsController = TweetGlobe.TweetsController.create()
 
   socket.on 'news', (data)->
-    TweetGlobe.tweetsController.unshiftObject TweetGlobe.Tweet.createRecord(data)
+    TweetGlobe.tweetsController.addTweet TweetGlobe.Tweet.createRecord(data)
