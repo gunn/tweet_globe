@@ -3,13 +3,13 @@
   <div class="span6">
     <h3>
       Tweets
-      <small>({{TweetGlobe.tweetsController.count}})</small>
+      <small>({{TweetGlobe.tweetsController.filteredCount}} / {{TweetGlobe.tweetsController.count}})</small>
     </h3>
   </div>
 
   <div class="span6" id="tweetSearch">
     <form class="form-search float-right">
-      <input type="text" class="input-medium search-query">
+      {{view Ember.TextField valueBinding="TweetGlobe.tweetsController.searchTerm" class="input-medium search-query"}}
     </form>
   </div>
 
@@ -21,7 +21,7 @@
     <th>Text</th>
   </tr></thead>
   <tbody id="tweets">
-    {{#each TweetGlobe.tweetsController}}
+    {{#each TweetGlobe.tweetsController.filteredTweets}}
       <tr>
         <td>{{name}}</td>
         <td>{{text}}</td>
