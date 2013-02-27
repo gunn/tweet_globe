@@ -1,26 +1,28 @@
 TweetGlobe.TweetsController = Ember.ArrayController.extend
   content: []
-  maxStoredTweets: 5000
-  maxDisplayedTweets: 100
+  filteredTweets: []
+  maxStoredTweets: 1000
+  maxDisplayedTweets: 25
   searchTerm: ""
 
   addTweet: (tweet)->
     @unshiftObject(tweet)
+    @filterTweet(tweet)
     if @content.length > @maxStoredTweets
       @popObject()
 
-  filteredTweets: (->
-    count = 0
-    goodTweets = []
+  filterTweet: (tweet)->
+    if tweet.hasContent @get("searchTerm")
+      @filteredTweets.unshiftObject(tweet)
+      if @filteredTweets.length > @maxDisplayedTweets
+        @filteredTweets.popObject()
+
+  filterTweets: (->
+    @set "filteredTweets", []
     for tweet in @content
-      for f in ["name", "text"]
-        if tweet.get(f).indexOf(@searchTerm)!=-1
-          count++
-          goodTweets.push tweet
-          break
-      break if goodTweets.length >= @maxDisplayedTweets
-    goodTweets
-  ).property "searchTerm", "@each"
+      @filterTweet tweet
+      break if @filteredTweets.length >= @maxDisplayedTweets
+  ).observes "searchTerm"
 
   filteredCount: (->
     @get "filteredTweets.length"
