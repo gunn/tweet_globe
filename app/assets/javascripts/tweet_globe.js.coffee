@@ -13,12 +13,14 @@
 window.TweetGlobe = Ember.Application.create
   rootElement: "#content"
 
-socket = io.connect 'http://localhost:1337'
+TweetGlobe.ready = ->
+  socket = io.connect 'http://localhost:1337'
 
-table = $("#tweets")
+  TweetGlobe.tweetsController = TweetGlobe.TweetsController.create()
 
-socket.on 'news', (data)->
-  console.log data
-  row = "<tr><td>"+data.screen_name+"</td><td>"+data.text+"</td></tr>"
-  table.prepend(row)
+  # table = $("#tweets")
 
+  socket.on 'news', (data)->
+    TweetGlobe.tweetsController.addObject TweetGlobe.Tweet.createRecord(data)
+    # row = "<tr><td>"+data.screen_name+"</td><td>"+data.text+"</td></tr>"
+    # table.prepend(row)
