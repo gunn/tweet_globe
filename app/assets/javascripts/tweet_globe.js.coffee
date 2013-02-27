@@ -21,6 +21,6 @@ TweetGlobe.ready = ->
   # table = $("#tweets")
 
   socket.on 'news', (data)->
-    TweetGlobe.tweetsController.addObject TweetGlobe.Tweet.createRecord(data)
+    TweetGlobe.tweetsController.unshiftObject TweetGlobe.Tweet.createRecord(data)
     # row = "<tr><td>"+data.screen_name+"</td><td>"+data.text+"</td></tr>"
     # table.prepend(row)
