@@ -1,7 +1,19 @@
-<h3>
-  Tweets
-  <small>({{TweetGlobe.tweetsController.count}})</small>
-</h3>
+<div class="row-fluid" id="tweetBar">
+
+  <div class="span6">
+    <h3>
+      Tweets
+      <small>({{TweetGlobe.tweetsController.count}})</small>
+    </h3>
+  </div>
+
+  <div class="span6" id="tweetSearch">
+    <form class="form-search float-right">
+      <input type="text" class="input-medium search-query">
+    </form>
+  </div>
+
+</div>
 
 <table class="table table-striped table-bordered table-hover">
   <thead>

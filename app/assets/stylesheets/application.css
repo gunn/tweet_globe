@@ -12,3 +12,17 @@
  *= require_self
  *= require_tree .
  */
+
+.float-right {
+  float: right;
+}
+
+#tweetBar {
+  position: relative;
+}
+
+#tweetBar #tweetSearch {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
