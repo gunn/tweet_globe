@@ -4,6 +4,7 @@ gem 'rails', '3.2.12'
 gem 'sqlite3'
 
 gem 'ember-rails'
+gem 'd3-rails'
 
 gem 'haml-rails'
 
