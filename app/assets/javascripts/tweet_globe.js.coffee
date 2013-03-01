@@ -1,6 +1,5 @@
 #= require_self
 
-#= require ./store
 #= require_tree ./models
 #= require_tree ./controllers
 #= require_tree ./views
@@ -19,4 +18,4 @@ TweetGlobe.ready = ->
   TweetGlobe.tweetsController = TweetGlobe.TweetsController.create()
 
   socket.on 'news', (data)->
-    TweetGlobe.tweetsController.addTweet TweetGlobe.Tweet.createRecord(data)
+    TweetGlobe.tweetsController.addTweet TweetGlobe.Tweet.create(data)

@@ -1,9 +1,4 @@
-TweetGlobe.Tweet = DS.Model.extend
-  name:    DS.attr('string')
-  text:    DS.attr('string')
-  country: DS.attr('string')
-  lat:     DS.attr('number')
-  long:    DS.attr('number')
+TweetGlobe.Tweet = Ember.Object.extend
 
   hasContent: (text)->
     for f in ["name", "text", "country"]
