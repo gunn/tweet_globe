@@ -6,7 +6,8 @@ TweetGlobe.Tweet = DS.Model.extend
   long: DS.attr('number')
 
   hasContent: (text)->
-    for f in ["name", "text"]
-      if @get(f).indexOf(text)!=-1
+    for f in ["name", "text", "cc"]
+      field = @get(f)
+      if field? && field.indexOf(text)!=-1
         return true
     false
