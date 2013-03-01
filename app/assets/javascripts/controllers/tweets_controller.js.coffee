@@ -12,7 +12,7 @@ TweetGlobe.TweetsController = Ember.ArrayController.extend
       @popObject()
 
   filterTweet: (tweet)->
-    if tweet.hasContent @get("searchTerm")
+    if tweet.hasContent @get("searchTerm").toLowerCase()
       @filteredTweets.unshiftObject(tweet)
       if @filteredTweets.length > @maxDisplayedTweets
         @filteredTweets.popObject()

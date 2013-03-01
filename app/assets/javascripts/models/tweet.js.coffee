@@ -1,8 +1,12 @@
 TweetGlobe.Tweet = Ember.Object.extend
+  searchFields: ["name", "text", "country"]
+
+  searchIndex: (->
+    @searchFields
+      .map((f)=> @get f)
+      .join("\n")
+      .toLowerCase()
+  ).property @searchFields...
 
   hasContent: (text)->
-    for f in ["name", "text", "country"]
-      field = @get(f)
-      if field? && field.indexOf(text)!=-1
-        return true
-    false
+    @get("searchIndex").indexOf(text) != -1
