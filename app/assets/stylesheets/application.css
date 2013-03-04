@@ -26,3 +26,27 @@
   right: 0;
   bottom: 0;
 }
+
+#stretchy {
+  border-radius: 10px;
+  margin-bottom: 15px;
+
+  height: 400px;
+
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.bar {
+  fill: steelblue;
+}
+
+.x.axis path {
+  display: none;
+}
