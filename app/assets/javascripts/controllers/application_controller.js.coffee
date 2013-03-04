@@ -1,1 +1,1 @@
-TweetGlobe.ApplicationController = Ember.Controller.extend
+TweetGlobe.ApplicationController = Ember.Controller.extend()
