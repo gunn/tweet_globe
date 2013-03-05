@@ -23,7 +23,7 @@ TweetGlobe.ChartView = Ember.View.extend
 
   didInsertElement: ->
     @svg = d3.select("svg")
-    @scaleChart()
+    $(window).resize()
 
   attatchChart: ->
     d3.select("#stretchy").append(@svg)
