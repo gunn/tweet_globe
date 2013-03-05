@@ -5,6 +5,9 @@ TweetGlobe.TweetsController = Ember.ArrayController.extend
   maxDisplayedTweets: 25
   searchTerm: ""
 
+  chartHeight: 400
+  chartWidth:  1000
+
   addTweet: (tweet)->
     @unshiftObject(tweet)
     @filterTweet(tweet)
