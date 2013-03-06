@@ -5,6 +5,7 @@ TweetGlobe.ChartView = Ember.View.extend
   heightBinding: Ember.Binding.oneWay "TweetGlobe.tweetsController.chartHeight"
   widthBinding:  Ember.Binding.oneWay "TweetGlobe.tweetsController.chartWidth"
 
+  # === SETUP ===
   init: ->
     @_super()
     @data = @generateData()
@@ -21,35 +22,39 @@ TweetGlobe.ChartView = Ember.View.extend
 
   didInsertElement: ->
     @svg = d3.select("svg")
+    @drawChart()
     $(window).resize()
 
-  scaleChart: (->
+  # === CHART METHODS ===
+  setScales: ->
+    data = @data
+
     @x = d3.scale.ordinal()
       .rangeRoundBands([0, @get("width")], .1)
+      .domain data.map((d)-> d.cc)
 
     @y = d3.scale.linear()
-      .range([@get("height"), 0]);
+      .range([@get("height"), 0])
+      .domain [0, d3.max(data, (d)-> d.value)]
+
+  scaleChart: (->
+    @setScales()
 
     @svg.attr("width",  @get("width"))
         .attr("height", @get("height"))
 
-
-    @drawChart()
     @svg.selectAll(".bar")
       .attr("x", (d)=> @x(d.cc))
       .attr("width", @x.rangeBand())
       .attr("y", (d)=> @y(d.value))
       .attr("height", (d)=> @get("height")- @y(d.value))
-
   ).observes "width", "height"
 
   drawChart: ->
-    data = @data
-    @x.domain data.map((d)-> d.cc)
-    @y.domain [0, d3.max(data, (d)-> d.value)]
+    @setScales()
 
     @svg.selectAll(".bar")
-      .data(data)
+      .data(@data)
       .enter().append("rect")
       .attr("class", "bar")
       .attr("x", (d)=> @x(d.cc))
@@ -58,10 +63,10 @@ TweetGlobe.ChartView = Ember.View.extend
       .attr("height", (d)=> @get("height")- @y(d.value))
 
   update: (->
-    data = @get("data")
+    @setScales()
 
     @svg.selectAll(".bar")
-      .data(data)
+      .data(@get("data"))
       .transition().duration(1000)
       .attr("y", (d)=> @y(d.value))
       .attr("height", (d)=> @get("height")- @y(d.value))
