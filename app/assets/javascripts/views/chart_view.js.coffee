@@ -7,26 +7,21 @@ TweetGlobe.ChartView = Ember.View.extend
 
   init: ->
     @_super()
-    # console.log "!"
-    @data = @generate()
-
-  generate: ->
-    for n in [0..33]
-      cc: n.toString(32)
-      value: Math.random()*100
+    @data = @generateData()
 
   svgElement: "<svg></svg>"
 
   click: ->
-    console.log("!")
-    @set "data", @generate()
+    @set "data", @generateData()
+
+  generateData: ->
+    for n in [0..33]
+      cc: n.toString(32)
+      value: Math.random()*100
 
   didInsertElement: ->
     @svg = d3.select("svg")
     $(window).resize()
-
-  attatchChart: ->
-    d3.select("#stretchy").append(@svg)
 
   scaleChart: (->
     @x = d3.scale.ordinal()
