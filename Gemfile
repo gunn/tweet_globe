@@ -8,6 +8,11 @@ gem 'd3-rails'
 
 gem 'haml-rails'
 
+group :development do
+  gem 'guard-livereload'
+  gem 'rb-fsevent'
+end
+
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
