@@ -8,10 +8,32 @@
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
  *
- *= require twitter/bootstrap
+ *=# require twitter/bootstrap
  *= require_self
  *= require_tree .
  */
+
+body {
+  background-color: #333;
+  color: #CCC;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+table {
+  thead th {
+    text-align: left;
+    font-size: 18px;
+    border-bottom: 3px;
+    border-bottom-color: #CCC;
+  }
+  td {
+    font-family: Monaco, Consolas, "Lucida Console", monospace;
+    font-size: 12px;
+  }
+  tbody tr.odd {
+    background-color: #444;
+  }
+}
 
 .float-right {
   float: right;
@@ -37,14 +59,15 @@
 }
 
 .axis path,
-.axis line {
+.axis line,
+.axis text {
   fill: none;
-  stroke: #000;
+  stroke: #CCC;
   shape-rendering: crispEdges;
 }
 
 .bar {
-  fill: steelblue;
+  fill: #f60;
 }
 
 .x.axis path {
