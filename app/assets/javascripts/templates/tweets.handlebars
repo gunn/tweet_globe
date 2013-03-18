@@ -31,7 +31,7 @@
   </thead>
   <tbody id="tweets">
     {{#each TweetGlobe.tweetsController.filteredTweets}}
-      <tr>
+      <tr {{bindAttr class="isOdd:odd"}}>
         <td>{{name}}</td>
         <td>{{country}}</td>
         <td>{{text}}</td>
