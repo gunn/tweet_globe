@@ -1,5 +1,6 @@
 #= require_self
 
+#= require ./sample_tweets
 #= require_tree ./models
 #= require_tree ./controllers
 #= require_tree ./views
@@ -13,12 +14,15 @@ window.TweetGlobe = Ember.Application.create
   rootElement: "#content"
 
 TweetGlobe.ready = ->
-  socket = io.connect 'http://localhost:1337'
-
   TweetGlobe.tweetsController = TweetGlobe.TweetsController.create()
 
-  socket.on 'news', (data)->
-    TweetGlobe.tweetsController.addTweet TweetGlobe.Tweet.create(data)
+  unless TweetGlobe.SAMPLE_TWEETS
+    socket = io.connect 'http://localhost:1337'
+    socket.on 'news', (data)->
+      TweetGlobe.tweetsController.addTweet TweetGlobe.Tweet.create(data)
+  else
+    for tweet_fixture in TweetGlobe.SAMPLE_TWEETS
+      TweetGlobe.tweetsController.addTweet TweetGlobe.Tweet.create(tweet_fixture)
 
   $(window).resize ->
     stretchyDiv = $("#stretchy")
@@ -33,5 +37,3 @@ TweetGlobe.ready = ->
 
     TweetGlobe.tweetsController.set "chartWidth", stretchyWidth
     TweetGlobe.tweetsController.set "chartHeight", newHeight
-
-    console.log TweetGlobe.tweetsController.get("chartWidth"), TweetGlobe.tweetsController.get("chartHeight")
