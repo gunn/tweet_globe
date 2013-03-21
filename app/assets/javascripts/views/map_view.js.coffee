@@ -95,7 +95,7 @@ TweetGlobe.MapView = Ember.View.extend
   drawPoints: ->
     filteredTweets = TweetGlobe.tweetsController.get "filteredTweets"
 
-    circles = d3.select("svg").selectAll("circle")
+    circles = d3.select("svg").selectAll("circle:not(.exiting)")
       .data(filteredTweets, @tweetKey)
 
     circles
@@ -115,6 +115,7 @@ TweetGlobe.MapView = Ember.View.extend
           .style("stroke-opacity", 0.6)
 
     circles.exit()
+        .attr("class", "exiting")
       .transition()
         .duration(1000)
         .ease(Math.sqrt)
