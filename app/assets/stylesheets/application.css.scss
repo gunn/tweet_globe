@@ -73,3 +73,19 @@ table {
 .x.axis path {
   display: none;
 }
+
+line {
+  stroke: brown;
+  stroke-dasharray: 4,2;
+}
+
+path {
+  fill: #191919;
+  stroke: #444;
+}
+
+circle {
+  stroke: #f60;
+}
+
+

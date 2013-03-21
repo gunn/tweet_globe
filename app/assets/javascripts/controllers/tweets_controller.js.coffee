@@ -1,8 +1,8 @@
-TweetGlobe.TweetsController = Ember.ArrayController.extend
+TweetGlobe.TweetsController = Ember.ArrayController.extend Ember.Evented,
   content: []
   filteredTweets: []
-  maxStoredTweets: 1000
-  maxDisplayedTweets: 25
+  maxStoredTweets: 800
+  maxDisplayedTweets: 80
   searchTerm: ""
 
   chartHeight: 400
@@ -22,9 +22,13 @@ TweetGlobe.TweetsController = Ember.ArrayController.extend
 
   filterTweets: (->
     @set "filteredTweets", []
+
     for tweet in @content
       @filterTweet tweet
       break if @filteredTweets.length >= @maxDisplayedTweets
+
+    @trigger "filterEnd"
+
   ).observes "searchTerm"
 
   filteredCount: (->
