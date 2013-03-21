@@ -18,6 +18,10 @@ TweetGlobe.MapView = Ember.View.extend
 
     @path = d3.geo.path().projection(@xy)
 
+    @states = d3.select("svg")
+      .append("g")
+        .attr("id", "states")
+
 
     @mousedown = =>
       @m0 = [d3.event.pageX, d3.event.pageY]
@@ -47,11 +51,27 @@ TweetGlobe.MapView = Ember.View.extend
 
     d3.select("svg")
       .on("mousemove", @mousemove)
-      .on("mouseup", @mouseup);
+      .on("mouseup", @mouseup)
 
-    @states = d3.select("svg")
-      .append("g")
-        .attr("id", "states")
+    d3.select("svg").append("text")
+      .attr("class", "label")
+
+    $("svg")
+      .on "mousemove", (e)->
+        if e.target?.tagName == "circle"
+          if (circle=d3.select(e.target)).style("display") == "inline"
+            circle = d3.select(e.target)
+            data   = e.target.__data__
+
+            d3.select(".label")
+              .style("display", "inline")
+              .text(data.text)
+              .attr("x", circle.attr("cx"))
+              .attr("y", circle.attr("cy"))
+            return true
+
+        d3.select(".label")
+          .style("display", "none")
         
 
     # equator = d3.select("svg")
@@ -103,9 +123,9 @@ TweetGlobe.MapView = Ember.View.extend
         .remove()
 
     circles
-      .style "opacity", (t)=>
+      .style "display", (t)=>
         p = { type: "Point" , coordinates: [t.long, t.lat] }
-        @circle.clip(p) && "1" || "0"
+        @circle.clip(p) && "inline" || "none"
 
   refresh: ->
     @states.selectAll("path")
