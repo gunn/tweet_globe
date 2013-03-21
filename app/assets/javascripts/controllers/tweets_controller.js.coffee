@@ -2,7 +2,7 @@ TweetGlobe.TweetsController = Ember.ArrayController.extend Ember.Evented,
   content: []
   filteredTweets: []
   maxStoredTweets: 800
-  maxDisplayedTweets: 80
+  maxDisplayedTweets: 40
   searchTerm: ""
 
   chartHeight: 400
@@ -13,6 +13,7 @@ TweetGlobe.TweetsController = Ember.ArrayController.extend Ember.Evented,
     @filterTweet(tweet)
     if @content.length > @maxStoredTweets
       @popObject()
+    @trigger "filterEnd"
 
   filterTweet: (tweet)->
     if tweet.hasContent @get("searchTerm").toLowerCase()
