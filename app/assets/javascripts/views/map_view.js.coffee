@@ -72,12 +72,6 @@ TweetGlobe.MapView = Ember.View.extend
 
         d3.select(".label")
           .style("display", "none")
-        
-
-    # equator = d3.select("svg")
-    #   .append("line")
-    #     .attr("x1", "0%")
-    #     .attr("x2", "100%")
 
     d3.json "/world-countries.json", (collection)=>
       @states
@@ -87,10 +81,6 @@ TweetGlobe.MapView = Ember.View.extend
           .attr("d", (d)=>@path(@circle.clip(d)))
         .append("title")
           .text((d)-> d.properties.name)
-
-      # equator
-      #     .attr("y1", @xy([0, 0])[1])
-      #     .attr("y2", @xy([0, 0])[1])
 
   drawPoints: ->
     filteredTweets = TweetGlobe.tweetsController.get "filteredTweets"
