@@ -15,30 +15,14 @@ TweetGlobe.MapView = Ember.View.extend
   didInsertElement: ->
     @globe = d3.select("#globe")
 
-    @mouseSetup()
+    @draggingSetup()
+    @mouseoverSetup()
 
     @path = d3.geo.path().projection(@xy)
 
     @states = @globe
       .append("g")
         .attr("id", "states")
-
-    $("svg")
-      .on "mousemove", (e)->
-        if e.target?.tagName == "circle"
-          if (circle=d3.select(e.target)).style("display") == "inline"
-            circle = d3.select(e.target)
-            data   = e.target.__data__
-
-            d3.select(".label")
-              .style("display", "inline")
-              .text(data.text)
-              .attr("x", circle.attr("cx"))
-              .attr("y", circle.attr("cy"))
-            return true
-
-        d3.select(".label")
-          .style("display", "none")
 
     d3.json "/world-countries.json", (collection)=>
       @states
@@ -49,7 +33,7 @@ TweetGlobe.MapView = Ember.View.extend
         .append("title")
           .text((d)-> d.properties.name)
 
-  mouseSetup: ->
+  draggingSetup: ->
     @mousedown = =>
       @m0 = [d3.event.pageX, d3.event.pageY]
       @o0 = @xy.origin()
@@ -79,8 +63,26 @@ TweetGlobe.MapView = Ember.View.extend
       .on("mousemove", @mousemove)
       .on("mouseup", @mouseup)
 
+  mouseoverSetup: ->
     @globe.append("text")
       .attr("class", "label")
+
+    $("#globe")
+      .on "mousemove", (e)->
+        if e.target?.tagName == "circle"
+          if (circle=d3.select(e.target)).style("display") == "inline"
+            circle = d3.select(e.target)
+            data   = e.target.__data__
+
+            d3.select(".label")
+              .style("display", "inline")
+              .text(data.text)
+              .attr("x", circle.attr("cx"))
+              .attr("y", circle.attr("cy"))
+            return true
+
+        d3.select(".label")
+          .style("display", "none")
 
   drawPoints: ->
     filteredTweets = TweetGlobe.tweetsController.get "filteredTweets"
