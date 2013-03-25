@@ -1,8 +1,6 @@
 TweetGlobe.MapView = Ember.View.extend
-  defaultTemplate: Ember.Handlebars.compile("{{ view.svgElement }}")
+  defaultTemplate: Ember.Handlebars.compile("<svg id='globe'></svg>")
   controller: TweetGlobe.TweetsController
-
-  svgElement: "<svg data-whatever='lala'></svg>"
 
   init: ->
     @xy = d3.geo.azimuthal().scale(240).mode("orthographic")
@@ -15,46 +13,15 @@ TweetGlobe.MapView = Ember.View.extend
     TweetGlobe.tweetsController.on "filterEnd", => @drawPoints()
 
   didInsertElement: ->
+    @globe = d3.select("#globe")
+
+    @mouseSetup()
 
     @path = d3.geo.path().projection(@xy)
 
-    @states = d3.select("svg")
+    @states = @globe
       .append("g")
         .attr("id", "states")
-
-
-    @mousedown = =>
-      @m0 = [d3.event.pageX, d3.event.pageY]
-      @o0 = @xy.origin()
-      d3.event.preventDefault()
-
-    @mousemove = =>
-      if @m0
-        stopRotating = true
-
-        m1 = [d3.event.pageX, d3.event.pageY]
-        o1 = [@o0[0] + (@m0[0] - m1[0]) / 8, @o0[1] + (m1[1] - @m0[1]) / 8];
-
-        @xy.origin(o1)
-
-        @circle.origin(o1)
-        @refresh()
-
-    @mouseup = =>
-      if @m0
-        @mousemove()
-        @m0 = null
-
-
-    d3.select("svg")
-      .on("mousedown", @mousedown)
-
-    d3.select("svg")
-      .on("mousemove", @mousemove)
-      .on("mouseup", @mouseup)
-
-    d3.select("svg").append("text")
-      .attr("class", "label")
 
     $("svg")
       .on "mousemove", (e)->
@@ -82,10 +49,43 @@ TweetGlobe.MapView = Ember.View.extend
         .append("title")
           .text((d)-> d.properties.name)
 
+  mouseSetup: ->
+    @mousedown = =>
+      @m0 = [d3.event.pageX, d3.event.pageY]
+      @o0 = @xy.origin()
+      d3.event.preventDefault()
+
+    @mousemove = =>
+      if @m0
+        stopRotating = true
+
+        m1 = [d3.event.pageX, d3.event.pageY]
+        o1 = [@o0[0] + (@m0[0] - m1[0]) / 8, @o0[1] + (m1[1] - @m0[1]) / 8];
+
+        @xy.origin(o1)
+
+        @circle.origin(o1)
+        @refresh()
+
+    @mouseup = =>
+      if @m0
+        @mousemove()
+        @m0 = null
+
+    @globe
+      .on("mousedown", @mousedown)
+
+    d3.selectAll("#globe,html")
+      .on("mousemove", @mousemove)
+      .on("mouseup", @mouseup)
+
+    @globe.append("text")
+      .attr("class", "label")
+
   drawPoints: ->
     filteredTweets = TweetGlobe.tweetsController.get "filteredTweets"
 
-    circles = d3.select("svg").selectAll("circle:not(.exiting)")
+    circles = @globe.selectAll("circle:not(.exiting)")
       .data(filteredTweets, @tweetKey)
 
     circles
