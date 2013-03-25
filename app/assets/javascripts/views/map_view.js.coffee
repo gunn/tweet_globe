@@ -16,22 +16,8 @@ TweetGlobe.MapView = Ember.View.extend
     @globe = d3.select("#globe")
 
     @draggingSetup()
+    @drawGlobe()
     @mouseoverSetup()
-
-    @path = d3.geo.path().projection(@xy)
-
-    @states = @globe
-      .append("g")
-        .attr("id", "states")
-
-    d3.json "/world-countries.json", (collection)=>
-      @states
-        .selectAll("path")
-          .data(collection.features)
-        .enter().append("path")
-          .attr("d", (d)=>@path(@circle.clip(d)))
-        .append("title")
-          .text((d)-> d.properties.name)
 
   draggingSetup: ->
     @mousedown = =>
@@ -62,6 +48,22 @@ TweetGlobe.MapView = Ember.View.extend
     d3.selectAll("#globe,html")
       .on("mousemove", @mousemove)
       .on("mouseup", @mouseup)
+
+  drawGlobe: ->
+    @path = d3.geo.path().projection(@xy)
+
+    @states = @globe
+      .append("g")
+        .attr("id", "states")
+
+    d3.json "/world-countries.json", (collection)=>
+      @states
+        .selectAll("path")
+          .data(collection.features)
+        .enter().append("path")
+          .attr("d", (d)=>@path(@circle.clip(d)))
+        .append("title")
+          .text((d)-> d.properties.name)
 
   mouseoverSetup: ->
     @globe.append("text")
@@ -119,6 +121,12 @@ TweetGlobe.MapView = Ember.View.extend
       .style "display", (t)=>
         p = { type: "Point" , coordinates: [t.long, t.lat] }
         @circle.clip(p) && "inline" || "none"
+
+  resize: (->
+    TweetGlobe.tweetsController.get("chartWidth")
+
+    @refresh()
+  ).observes("TweetGlobe.tweetsController.chartWidth", "TweetGlobe.tweetsController.chartHeight")
 
   refresh: ->
     @states.selectAll("path")
