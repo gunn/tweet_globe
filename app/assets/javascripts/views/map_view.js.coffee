@@ -11,6 +11,7 @@ TweetGlobe.MapView = Ember.View.extend
     @tweetKey = (t)-> t.name
 
     TweetGlobe.tweetsController.on "filterEnd", => @drawPoints()
+    TweetGlobe.tweetsController.on "resize", => @resize()
 
   didInsertElement: ->
     @globe = d3.select("#globe")
@@ -61,9 +62,7 @@ TweetGlobe.MapView = Ember.View.extend
         .selectAll("path")
           .data(collection.features)
         .enter().append("path")
-          .attr("d", (d)=>@path(@circle.clip(d)))
-        .append("title")
-          .text((d)-> d.properties.name)
+      @resize()
 
   mouseoverSetup: ->
     @globe.append("text")
@@ -122,11 +121,18 @@ TweetGlobe.MapView = Ember.View.extend
         p = { type: "Point" , coordinates: [t.long, t.lat] }
         @circle.clip(p) && "inline" || "none"
 
-  resize: (->
-    TweetGlobe.tweetsController.get("chartWidth")
+  resize: ->
+    [stretchyDiv, w, h] = [$("#stretchy"), 1000, 600]
+
+    width = stretchyDiv.width()
+    height = h*(width / w)
+
+    stretchyDiv.height height
+
+    @xy.scale(height/2)
+       .translate [width/2, height/2]
 
     @refresh()
-  ).observes("TweetGlobe.tweetsController.chartWidth", "TweetGlobe.tweetsController.chartHeight")
 
   refresh: ->
     @states.selectAll("path")

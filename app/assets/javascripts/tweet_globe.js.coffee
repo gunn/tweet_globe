@@ -25,6 +25,8 @@ TweetGlobe.ready = ->
       TweetGlobe.tweetsController.addTweet TweetGlobe.Tweet.create(tweet_fixture)
 
   $(window).resize ->
+    TweetGlobe.tweetsController.trigger "resize"
+
     stretchyDiv = $("#stretchy")
     return unless stretchyDiv
     w = 1000
