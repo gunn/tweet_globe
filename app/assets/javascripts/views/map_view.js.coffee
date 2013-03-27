@@ -68,22 +68,29 @@ TweetGlobe.MapView = Ember.View.extend
     @globe.append("text")
       .attr("class", "label")
 
-    $("#globe")
-      .on "mousemove", (e)->
-        if e.target?.tagName == "circle"
-          if d3.select(e.target).style("display") == "inline"
-            circle = d3.select(e.target)
-            data   = e.target.__data__
+    $("#globe").on "mousemove", (e)=>
+      if @highlightedTweet && @highlightedTweet != e.target?.__data__
+        @highlightedTweet.set "highlighted", false
 
-            @label
-              .style("display", "inline")
-              .text(data.text)
-              .attr("x", circle.attr("cx") - $(@label[0]).width()/2)
-              .attr("y", circle.attr("cy"))
-            return true
+        @label.style("display", "none")
 
-        @label = d3.select(".label")
-          .style("display", "none")
+      if e.target?.tagName == "circle"
+        circle = d3.select(e.target)
+
+        if circle.style("display") == "inline"
+          tweet  = e.target.__data__
+          tweet.set "highlighted", true
+
+          @highlightedTweet = tweet
+
+          @label
+            .style("display", "inline")
+            .text(tweet.text)
+            .attr("x", circle.attr("cx") - $(@label[0]).width()/2)
+            .attr("y", circle.attr("cy"))
+          return true
+
+    @label = d3.select(".label")
 
   drawPoints: ->
     filteredTweets = TweetGlobe.tweetsController.get "filteredTweets"
