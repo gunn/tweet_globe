@@ -71,18 +71,18 @@ TweetGlobe.MapView = Ember.View.extend
     $("#globe")
       .on "mousemove", (e)->
         if e.target?.tagName == "circle"
-          if (circle=d3.select(e.target)).style("display") == "inline"
+          if d3.select(e.target).style("display") == "inline"
             circle = d3.select(e.target)
             data   = e.target.__data__
 
-            d3.select(".label")
+            @label
               .style("display", "inline")
               .text(data.text)
-              .attr("x", circle.attr("cx"))
+              .attr("x", circle.attr("cx") - $(@label[0]).width()/2)
               .attr("y", circle.attr("cy"))
             return true
 
-        d3.select(".label")
+        @label = d3.select(".label")
           .style("display", "none")
 
   drawPoints: ->
