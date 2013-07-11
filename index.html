@@ -1,0 +1,11 @@
+<script src="/socket.io/socket.io.js"></script>
+<table><tbody id="lala"></tbody></table>
+
+<script>
+  var socket = io.connect('http://localhost');
+  table = document.getElementById("lala");
+  socket.on('news', function (data) {
+    console.log(data);
+    table.innerHTML = "<tr><td>"+data.screen_name+"</td><td>"+data.text+"</td></tr>"+ table.innerHTML;
+  });
+</script>
