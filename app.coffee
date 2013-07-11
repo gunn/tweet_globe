@@ -19,16 +19,15 @@ ntwitter.stream 'statuses/filter',
   locations: "-180,-90,180,90",
   (stream)->
     stream.on 'data', (data)->
-      new Tweet data
+
+      if data.geo?.coordinates? && Math.random()>0.7
+        io.sockets.emit 'news', new Tweet(data)
 
 class Tweet
   constructor: (data)->
-    if data.geo?.coordinates? && Math.random()>0.7
-      [@lat, @long] = data.geo.coordinates
-      @text = data.text
+    [@lat, @long] = data.geo.coordinates
+    @text = data.text
 
-      @screen_name = data.user.screen_name
-      @name = data.user.name
-      @country = data.place?.country
-
-      io.sockets.emit 'news', @
+    @screen_name = data.user.screen_name
+    @name = data.user.name
+    @country = data.place?.country
