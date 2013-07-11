@@ -26,16 +26,3 @@ TweetGlobe.ready = ->
 
   $(window).resize ->
     TweetGlobe.tweetsController.trigger "resize"
-
-    stretchyDiv = $("#stretchy")
-    return unless stretchyDiv
-    w = 1000
-    h = 400
-
-    stretchyWidth = stretchyDiv.width()
-    newHeight = h*(stretchyWidth / w)
-
-    stretchyDiv.height newHeight
-
-    TweetGlobe.tweetsController.set "chartWidth", stretchyWidth
-    TweetGlobe.tweetsController.set "chartHeight", newHeight
