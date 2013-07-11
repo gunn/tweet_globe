@@ -1,3 +1,0 @@
-TweetGlobe.Router.map(function() {
-
-});
