@@ -1,13 +1,33 @@
-fs = require('fs')
-app = require('http').createServer (req, res)->
-  fs.readFile __dirname + '/index.html', (err, data)->
+fs      = require('fs')
+connect = require('connect')
+http    = require('http')
+
+app = connect()
+  .use(connect.logger('dev'))
+  .use(require('connect-assets')())
+  .use((req, res)->
     res.writeHead 200
-    res.end data
+    res.end """
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>Tweet Globe</title>
+        <link href="/assets/application.css?body=1" media="screen" rel="stylesheet" type="text/css" />
+        <meta content="authenticity_token" name="csrf-param" />
+        <meta content="OKIhrU6kWZ+kbp6Ukj//8718Zsz4Gdmp0JqGwcB6TkE=" name="csrf-token" />
+      </head>
+      <body>
+        <div class='container-fluid' id='content'>
 
-app.listen 1337
+        </div>
+        #{js("hi")}
+      </body>
+    </html>
+    """
+  ).listen(1337)
 
+io = require('socket.io').listen app
 
-io = require('socket.io').listen(app)
 
 ntwitter = new require('ntwitter')
   consumer_key:        'gcnju0wIvzpwsbu7gdR2pA'
@@ -31,3 +51,4 @@ class Tweet
     @screen_name = data.user.screen_name
     @name = data.user.name
     @country = data.place?.country
+
