@@ -1,0 +1,78 @@
+body {
+  background-color: #333;
+  color: #CCC;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+table thead th {
+  text-align: left;
+  font-size: 18px;
+  border-bottom: 3px;
+  border-bottom-color: #CCC;
+}
+table td {
+  font-family: Monaco, Consolas, "Lucida Console", monospace;
+  font-size: 12px;
+}
+table tbody tr.odd {
+  background-color: #444;
+}
+table tbody tr.highlighted {
+  background-color: #742;
+}
+
+.float-right {
+  float: right;
+}
+
+#tweetBar {
+  position: relative;
+}
+
+#tweetBar #tweetSearch {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+#stretchy {
+  border-radius: 10px;
+  margin-bottom: 15px;
+  height: 400px;
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line,
+.axis text {
+  fill: none;
+  stroke: #CCC;
+  shape-rendering: crispEdges;
+}
+
+.bar {
+  fill: #f60;
+}
+
+.x.axis path {
+  display: none;
+}
+
+line {
+  stroke: brown;
+  stroke-dasharray: 4,2;
+}
+
+path {
+  fill: #191919;
+  stroke: #444;
+}
+
+circle {
+  fill-opacity: 0;
+  stroke: #f60;
+}
+
+text {
+  fill: #AAA;
+}

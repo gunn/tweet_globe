@@ -13,9 +13,7 @@ app = connect()
     <html>
       <head>
         <title>Tweet Globe</title>
-        <link href="/assets/application.css?body=1" media="screen" rel="stylesheet" type="text/css" />
-        <meta content="authenticity_token" name="csrf-param" />
-        <meta content="OKIhrU6kWZ+kbp6Ukj//8718Zsz4Gdmp0JqGwcB6TkE=" name="csrf-token" />
+        #{css("application")}
       </head>
       <body>
         <div class='container-fluid' id='content'>
