@@ -6,6 +6,7 @@ http    = require('http')
 app = connect()
   .use(connect.logger('dev'))
   .use(require('connect-assets')())
+  .use(connect.static('public'))
   .use((req, res)->
     res.writeHead 200
     res.end """
