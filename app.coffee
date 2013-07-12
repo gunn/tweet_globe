@@ -25,7 +25,7 @@ app = connect()
       </body>
     </html>
     """
-  ).listen(1337)
+  ).listen(process.env.PORT || 1337)
 
 io = require('socket.io').listen app
 io.set('log level', 0)
