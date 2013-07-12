@@ -55,10 +55,12 @@ ntwitter = new require('ntwitter')
 ntwitter.stream 'statuses/filter',
   locations: "-180,-90,180,90",
   (stream)->
+    count = 0
     stream.on 'data', (data)->
 
-      if data.geo?.coordinates? && Math.random()>0.7
+      if data.geo?.coordinates? && ++count==4
         io.sockets.emit 'news', new Tweet(data)
+        count = 0
 
 class Tweet
   constructor: (data)->
