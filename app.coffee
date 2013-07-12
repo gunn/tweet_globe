@@ -20,7 +20,7 @@ app = connect()
         <div class='container-fluid' id='content'>
 
         </div>
-        #{js("hi")}
+        #{js("application")}
       </body>
     </html>
     """
