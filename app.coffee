@@ -28,6 +28,7 @@ app = connect()
   ).listen(1337)
 
 io = require('socket.io').listen app
+io.set('log level', 0)
 
 hbsTags = ()->
   tags = for name in ["application", "chart", "tweets"]
