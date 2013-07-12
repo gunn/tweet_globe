@@ -41,7 +41,7 @@ hbsTags = ()->
 hbsTag = (name)->
   template = path.join(__dirname, "assets/js/templates/#{name}.handlebars")
   """
-  <script type="text/x-handlebars">
+  <script type="text/x-handlebars" data-template-name="#{name}">
     #{fs.readFileSync(template)}
   </script>
   """
