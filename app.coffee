@@ -1,4 +1,5 @@
 fs      = require('fs')
+path    = require('path')
 connect = require('connect')
 http    = require('http')
 
@@ -20,6 +21,7 @@ app = connect()
         <div class='container-fluid' id='content'>
 
         </div>
+        #{hbsTags()}
         #{js("application")}
       </body>
     </html>
@@ -28,6 +30,21 @@ app = connect()
 
 io = require('socket.io').listen app
 
+hbsTags = ()->
+  tags = for name in ["application", "chart", "tweets"]
+    hbsTag(name)
+
+  console.log(tags, "!")
+  tags.join("\n")
+
+
+hbsTag = (name)->
+  template = path.join(__dirname, "assets/js/templates/#{name}.handlebars")
+  """
+  <script type="text/x-handlebars">
+    #{fs.readFileSync(template)}
+  </script>
+  """
 
 ntwitter = new require('ntwitter')
   consumer_key:        'gcnju0wIvzpwsbu7gdR2pA'
