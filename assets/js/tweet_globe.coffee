@@ -5,7 +5,7 @@ TweetGlobe.ready = ->
   TweetGlobe.tweetsController = TweetGlobe.TweetsController.create()
 
   unless TweetGlobe.SAMPLE_TWEETS
-    socket = io.connect 'http://localhost:1337'
+    socket = io.connect '/'
     socket.on 'news', (data)->
       TweetGlobe.tweetsController.addTweet TweetGlobe.Tweet.create(data)
   else
