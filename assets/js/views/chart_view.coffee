@@ -5,13 +5,11 @@ App.ChartView = Ember.View.extend
   marginLeft:   40
   marginBottom: 20
 
-  height: (->
-    App.tweetsController.get("chartHeight") - @marginBottom
-  ).property "App.tweetsController.chartHeight"
+  height: Em.auto "App.tweetsController.chartHeight", (height)->
+    height - @marginBottom
 
-  width: (->
-    App.tweetsController.get("chartWidth") - @marginLeft
-  ).property "App.tweetsController.chartWidth"
+  height: Em.auto "App.tweetsController.chartWidth", (width)->
+    width - @marginLeft
 
   # === SETUP ===
   init: ->

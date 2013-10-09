@@ -1,12 +1,8 @@
 App.Tweet = Ember.Object.extend
-  searchFields: ["name", "text", "country"]
-
-  searchIndex: (->
-    @searchFields
-      .map((f)=> @get f)
+  searchIndex: Em.auto "name", "text", "country", ()->
+    [].slice.call(arguments)
       .join("\n")
       .toLowerCase()
-  ).property @searchFields...
 
   hasContent: (text)->
     @get("searchIndex").indexOf(text) != -1
