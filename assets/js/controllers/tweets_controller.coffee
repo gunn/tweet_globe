@@ -31,11 +31,3 @@ TweetGlobe.TweetsController = Ember.ArrayController.extend Ember.Evented,
     @trigger "filterEnd"
 
   ).observes "searchTerm"
-
-  filteredCount: (->
-    @get "filteredTweets.length"
-  ).property "filteredTweets.@each"
-
-  count: (->
-    @get "length"
-  ).property "@each"

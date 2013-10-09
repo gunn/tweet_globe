@@ -10,7 +10,7 @@
   <div class="span6">
     <h3>
       Tweets
-      <small>({{TweetGlobe.tweetsController.filteredCount}} / {{TweetGlobe.tweetsController.count}})</small>
+      <small>({{TweetGlobe.tweetsController.filteredTweets.length}} / {{TweetGlobe.tweetsController.length}})</small>
     </h3>
   </div>
 
@@ -32,7 +32,7 @@
   </thead>
   <tbody id="tweets">
     {{#each TweetGlobe.tweetsController.filteredTweets}}
-      <tr {{bindAttr class="highlighted isOdd:odd"}}>
+      <tr>
         <td>{{name}}</td>
         <td>{{country}}</td>
         <td>{{text}}</td>
