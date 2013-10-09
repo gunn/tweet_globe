@@ -7,10 +7,11 @@ TweetGlobe.ready = ->
   unless TweetGlobe.SAMPLE_TWEETS
     socket = io.connect '/'
     socket.on 'news', (data)->
-      TweetGlobe.tweetsController.addTweet TweetGlobe.Tweet.create(data)
+      for tweetData in data
+        TweetGlobe.tweetsController.addTweet TweetGlobe.Tweet.create(tweetData)
   else
-    for tweet_fixture in TweetGlobe.SAMPLE_TWEETS
-      TweetGlobe.tweetsController.addTweet TweetGlobe.Tweet.create(tweet_fixture)
+    for tweetFixture in TweetGlobe.SAMPLE_TWEETS
+      TweetGlobe.tweetsController.addTweet TweetGlobe.Tweet.create(tweetFixture)
 
   $(window).resize ->
     TweetGlobe.tweetsController.trigger "resize"
