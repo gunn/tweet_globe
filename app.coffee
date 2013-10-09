@@ -3,6 +3,20 @@ path    = require('path')
 connect = require('connect')
 http    = require('http')
 
+hbsTags = ()->
+  tags = for name in ["application", "chart", "tweets"]
+    hbsTag(name)
+
+  tags.join("\n")
+
+hbsTag = (name)->
+  template = path.join(__dirname, "assets/js/templates/#{name}.handlebars")
+  """
+  <script type="text/x-handlebars" data-template-name="#{name}">
+    #{fs.readFileSync(template)}
+  </script>
+  """
+
 app = connect()
   .use(connect.logger('dev'))
   .use(require('connect-assets')())
@@ -27,24 +41,33 @@ app = connect()
     """
   ).listen(process.env.PORT || 1337)
 
-io = require('socket.io').listen app
-io.set('log level', 0)
 
-hbsTags = ()->
-  tags = for name in ["application", "chart", "tweets"]
-    hbsTag(name)
+class Tweet
+  @buffer      : []
+  @history     : []
 
-  console.log(tags, "!")
-  tags.join("\n")
+  @bufferSize  : 20
+  @historySize : 100
+  @maxRate     : 2
 
+  @add: (data)->
+    @buffer.unshift new Tweet(data)
 
-hbsTag = (name)->
-  template = path.join(__dirname, "assets/js/templates/#{name}.handlebars")
-  """
-  <script type="text/x-handlebars" data-template-name="#{name}">
-    #{fs.readFileSync(template)}
-  </script>
-  """
+  @getLatest: ->
+    removed = @buffer.splice(@bufferSize)
+    @history = removed.concat(@history).slice(0, @historySize)
+
+    latest = removed.slice(0, @maxRate)
+    latest
+
+  constructor: (data)->
+    [@lat, @long] = data.geo.coordinates
+    @text = data.text
+
+    @screen_name = data.user.screen_name
+    @name = data.user.name
+    @country = data.place?.country
+
 
 ntwitter = new require('ntwitter')
   consumer_key:        'gcnju0wIvzpwsbu7gdR2pA'
@@ -55,19 +78,18 @@ ntwitter = new require('ntwitter')
 ntwitter.stream 'statuses/filter',
   locations: "-180,-90,180,90",
   (stream)->
-    count = 0
     stream.on 'data', (data)->
 
-      if data.geo?.coordinates? && ++count==4
-        io.sockets.emit 'news', new Tweet(data)
-        count = 0
+      if data.geo?.coordinates?
+        Tweet.add data
 
-class Tweet
-  constructor: (data)->
-    [@lat, @long] = data.geo.coordinates
-    @text = data.text
 
-    @screen_name = data.user.screen_name
-    @name = data.user.name
-    @country = data.place?.country
+io = require('socket.io').listen app
+io.set('log level', 0)
 
+io.sockets.on 'connection', (socket)->
+  socket.emit "news", Tweet.history
+
+setInterval ->
+  io.sockets.emit "news", Tweet.getLatest()
+, 200
