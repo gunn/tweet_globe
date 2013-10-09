@@ -3,6 +3,8 @@
 #= require handlebars
 #= require ember
 
+#= require ember-auto
+
 #= require d3
 #= require socket.io
 
