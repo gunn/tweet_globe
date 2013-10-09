@@ -1,7 +1,7 @@
 <div class="row-fluid">
   <div id="stretchy" class="span12">
-    {{!view TweetGlobe.ChartView }}
-    {{view TweetGlobe.MapView }}
+    {{!view App.ChartView }}
+    {{view App.MapView }}
   </div>
 </div>
 
@@ -10,13 +10,13 @@
   <div class="span6">
     <h3>
       Tweets
-      <small>({{TweetGlobe.tweetsController.filteredTweets.length}} / {{TweetGlobe.tweetsController.length}})</small>
+      <small>({{App.tweetsController.filteredTweets.length}} / {{App.tweetsController.length}})</small>
     </h3>
   </div>
 
   <div class="span6" id="tweetSearch">
     <form class="form-search float-right">
-      {{view Ember.TextField valueBinding="TweetGlobe.tweetsController.searchTerm" class="input-medium search-query"}}
+      {{view Ember.TextField valueBinding="App.tweetsController.searchTerm" class="input-medium search-query"}}
     </form>
   </div>
 
@@ -31,7 +31,7 @@
     </tr>
   </thead>
   <tbody id="tweets">
-    {{#each TweetGlobe.tweetsController.filteredTweets}}
+    {{#each App.tweetsController.filteredTweets}}
       <tr>
         <td>{{name}}</td>
         <td>{{country}}</td>

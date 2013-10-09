@@ -1,4 +1,4 @@
-TweetGlobe.Tweet = Ember.Object.extend
+App.Tweet = Ember.Object.extend
   searchFields: ["name", "text", "country"]
 
   searchIndex: (->

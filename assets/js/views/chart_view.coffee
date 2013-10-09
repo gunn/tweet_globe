@@ -1,17 +1,17 @@
-TweetGlobe.ChartView = Ember.View.extend
+App.ChartView = Ember.View.extend
   templateName: "chart"
-  controller: TweetGlobe.TweetsController
+  controller: App.TweetsController
 
   marginLeft:   40
   marginBottom: 20
 
   height: (->
-    TweetGlobe.tweetsController.get("chartHeight") - @marginBottom
-  ).property "TweetGlobe.tweetsController.chartHeight"
+    App.tweetsController.get("chartHeight") - @marginBottom
+  ).property "App.tweetsController.chartHeight"
 
   width: (->
-    TweetGlobe.tweetsController.get("chartWidth") - @marginLeft
-  ).property "TweetGlobe.tweetsController.chartWidth"
+    App.tweetsController.get("chartWidth") - @marginLeft
+  ).property "App.tweetsController.chartWidth"
 
   # === SETUP ===
   init: ->
@@ -23,10 +23,10 @@ TweetGlobe.ChartView = Ember.View.extend
 
   click: (->
     @set "data", @generateData()
-  ).observes("TweetGlobe.tweetsController.filteredTweets.@each")
+  ).observes("App.tweetsController.filteredTweets.@each")
 
   generateData: ->
-    tweets = TweetGlobe.tweetsController.filteredTweets
+    tweets = App.tweetsController.filteredTweets
     lengths = Array(14).join("0").split("").map -> 0
 
     for tweet in tweets

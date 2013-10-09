@@ -1,6 +1,6 @@
-TweetGlobe.MapView = Ember.View.extend
+App.MapView = Ember.View.extend
   defaultTemplate: Ember.Handlebars.compile("<svg id='globe'></svg>")
-  controller: TweetGlobe.TweetsController
+  controller: App.TweetsController
 
   init: ->
     @xy = d3.geo.azimuthal().scale(240).mode("orthographic")
@@ -10,8 +10,8 @@ TweetGlobe.MapView = Ember.View.extend
 
     @tweetKey = (t)-> t.name
 
-    TweetGlobe.tweetsController.on "filterEnd", => @drawPoints()
-    TweetGlobe.tweetsController.on "resize", => @resize()
+    App.tweetsController.on "filterEnd", => @drawPoints()
+    App.tweetsController.on "resize", => @resize()
 
   didInsertElement: ->
     @globe = d3.select("#globe")
@@ -93,7 +93,7 @@ TweetGlobe.MapView = Ember.View.extend
     @label = d3.select(".label")
 
   drawPoints: ->
-    filteredTweets = TweetGlobe.tweetsController.get "filteredTweets"
+    filteredTweets = App.tweetsController.get "filteredTweets"
 
     circles = @globe.selectAll("circle:not(.exiting)")
       .data(filteredTweets, @tweetKey)

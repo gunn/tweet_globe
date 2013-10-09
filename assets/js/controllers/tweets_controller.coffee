@@ -1,4 +1,4 @@
-TweetGlobe.TweetsController = Ember.ArrayController.extend Ember.Evented,
+App.TweetsController = Ember.ArrayController.extend Ember.Evented,
   content: []
   filteredTweets: []
   maxStoredTweets: 800

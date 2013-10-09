@@ -1,4 +1,4 @@
-TweetGlobe.SAMPLE_TWEETS =
+App.SAMPLE_TWEETS =
 [{
     "lat": 18.5249617,
     "long": -70.0072965,

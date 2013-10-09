@@ -1,19 +1,19 @@
-window.TweetGlobe = Ember.Application.create
+window.App = Ember.Application.create
   rootElement:  "#content"
   USE_FIXTURES: false
 
-TweetGlobe.ready = ->
-  TweetGlobe.tweetsController = TweetGlobe.TweetsController.create()
+App.ready = ->
+  App.tweetsController = App.TweetsController.create()
 
-  if TweetGlobe.USE_FIXTURES
-    for tweetFixture in TweetGlobe.SAMPLE_TWEETS
-      TweetGlobe.tweetsController.addTweet TweetGlobe.Tweet.create(tweetFixture)
+  if App.USE_FIXTURES
+    for tweetFixture in App.SAMPLE_TWEETS
+      App.tweetsController.addTweet App.Tweet.create(tweetFixture)
   else
     socket = io.connect '/'
     socket.on 'news', (data)->
       for tweetData in data
-        TweetGlobe.tweetsController.addTweet TweetGlobe.Tweet.create(tweetData)
-      TweetGlobe.tweetsController.trigger "filterEnd"
+        App.tweetsController.addTweet App.Tweet.create(tweetData)
+      App.tweetsController.trigger "filterEnd"
 
   $(window).resize ->
-    TweetGlobe.tweetsController.trigger "resize"
+    App.tweetsController.trigger "resize"
