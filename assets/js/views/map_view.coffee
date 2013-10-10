@@ -3,10 +3,13 @@ App.MapView = Ember.View.extend
   controller: App.TweetsController
 
   init: ->
-    @xy = d3.geo.azimuthal().scale(240).mode("orthographic")
-    @xy.origin([-60, 0])
-    @circle = d3.geo.greatCircle()
-    @circle.origin([-60, 0])
+    @xy = d3.geo.orthographic()
+      .scale(240)
+      .clipAngle(90)
+
+    # @xy.origin([-60, 0])
+    # @circle = d3.geo.circle()
+    # @circle.origin([-60, 0])
 
     @tweetKey = (t)-> t.name
 
@@ -14,7 +17,8 @@ App.MapView = Ember.View.extend
     App.tweetsController.on "resize", => @resize()
 
   didInsertElement: ->
-    @globe = d3.select("#globe")
+    @globe     = d3.select("#globe")
+    @graticule = d3.geo.graticule()
 
     @draggingSetup()
     @drawGlobe()
@@ -22,26 +26,27 @@ App.MapView = Ember.View.extend
 
   draggingSetup: ->
     @mousedown = =>
-      @m0 = [d3.event.pageX, d3.event.pageY]
-      @o0 = @xy.origin()
+      rotate = @xy.rotate()
+      @origin =
+        x: (d3.event.x/2) - rotate[0]
+        y: (d3.event.y/2) + rotate[1]
+
       d3.event.preventDefault()
 
     @mousemove = =>
-      if @m0
-        stopRotating = true
+      if @origin
+        @xy.rotate([
+          (d3.event.x/2) - @origin.x,
+          @origin.y - (d3.event.y/2),
+          @xy.rotate()[2]
+        ])
 
-        m1 = [d3.event.pageX, d3.event.pageY]
-        o1 = [@o0[0] + (@m0[0] - m1[0]) / 8, @o0[1] + (m1[1] - @m0[1]) / 8];
-
-        @xy.origin(o1)
-
-        @circle.origin(o1)
         @refresh()
 
     @mouseup = =>
-      if @m0
+      if @origin
         @mousemove()
-        @m0 = null
+        @origin = null
 
     @globe
       .on("mousedown", @mousedown)
@@ -63,6 +68,11 @@ App.MapView = Ember.View.extend
           .data(collection.features)
         .enter().append("path")
       @resize()
+
+    @grid = @globe.append("path")
+      .datum(@graticule)
+      .attr("d", @path)
+
 
   mouseoverSetup: ->
     @globe.append("text")
@@ -126,7 +136,7 @@ App.MapView = Ember.View.extend
     circles
       .style "display", (t)=>
         p = { type: "Point" , coordinates: [t.long, t.lat] }
-        @circle.clip(p) && "inline" || "none"
+        # @circle.clip(p) && "inline" || "none"
 
   resize: ->
     [stretchyDiv, w, h] = [$("#stretchy"), 1000, 600]
@@ -142,7 +152,9 @@ App.MapView = Ember.View.extend
     @refresh()
 
   refresh: ->
-    @states.selectAll("path")
-      .attr("d", (d)=>@path(@circle.clip(d)))
+    @globe.selectAll("path")
+      .attr "d", (d)=>
+        @path d
+        # @path @circle.clip(d)
 
     @drawPoints()
