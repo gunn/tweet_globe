@@ -1,6 +1,6 @@
 body {
-  background-color: #333;
-  color: #CCC;
+  background-color: #111;
+  color: #999;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
@@ -8,7 +8,7 @@ table thead th {
   text-align: left;
   font-size: 18px;
   border-bottom: 3px;
-  border-bottom-color: #CCC;
+  border-bottom-color: #999;
 }
 table td {
   font-family: Monaco, Consolas, "Lucida Console", monospace;
@@ -64,15 +64,20 @@ line {
 }
 
 path {
-  fill: #191919;
-  stroke: #444;
+  fill: none;
+  stroke: #002f00;
+}
+
+#states path {
+  fill: rgba(0, 0, 0, 0.1);
+  stroke: #006000;
 }
 
 circle {
   fill-opacity: 0;
-  stroke: #f60;
+  stroke: #AF0;
 }
 
 text {
-  fill: #AAA;
+  fill: #AF0;
 }
