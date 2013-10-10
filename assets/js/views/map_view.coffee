@@ -7,10 +7,6 @@ App.MapView = Ember.View.extend
       .scale(240)
       .clipAngle(90)
 
-    # @xy.origin([-60, 0])
-    # @circle = d3.geo.circle()
-    # @circle.origin([-60, 0])
-
     @tweetKey = (t)-> t.name
 
     App.tweetsController.on "filterEnd", => @drawPoints()
@@ -25,7 +21,7 @@ App.MapView = Ember.View.extend
     @mouseoverSetup()
 
   draggingSetup: ->
-    @mousedown = =>
+    @globe.on "mousedown", =>
       rotate = @xy.rotate()
       @origin =
         x: (d3.event.x/2) - rotate[0]
@@ -47,9 +43,6 @@ App.MapView = Ember.View.extend
       if @origin
         @mousemove()
         @origin = null
-
-    @globe
-      .on("mousedown", @mousedown)
 
     d3.selectAll("#globe,html")
       .on("mousemove", @mousemove)
@@ -153,8 +146,6 @@ App.MapView = Ember.View.extend
 
   refresh: ->
     @globe.selectAll("path")
-      .attr "d", (d)=>
-        @path d
-        # @path @circle.clip(d)
+      .attr "d", @path
 
     @drawPoints()
