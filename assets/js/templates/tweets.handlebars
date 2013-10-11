@@ -11,7 +11,9 @@
     {{App.tweetsController.length}}
   </span>
 
-  {{view Ember.TextField valueBinding="App.tweetsController.searchTerm"}}
+  {{ view Ember.TextField
+     placeholder="Filter"
+     valueBinding="App.tweetsController.searchTerm" }}
 
   <ul>
     {{#each App.tweetsController.filteredTweets}}

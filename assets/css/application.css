@@ -1,38 +1,68 @@
 body, input {
   background-color: #111;
-  color: #999;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Monaco, Consolas, "Lucida Console", monospace;
 }
 
 #tweets {
-  width: 40%;
+  color: rgba(153, 153, 153, 0.3);
+
+  width: 35%;
 
   position: absolute;
-  top:   0px;
-  right: 0px;
+  top:   10px;
+  right: 10px;
 }
 
 input {
-  font-size: 15px;
+  font-size: 13px;
   background-color: #111;
 
+  opacity: 0.3;
+
   float: right;
-  padding: 4px;
+  padding: 1px 6px;
   width:   120px;
 
   border-width: 1px;
-  border-radius: 5px;
+  border-radius: 1px;
   border-color: #999;
   border-style: solid;
 }
 
-#tweets ul {
-  font-family: Monaco, Consolas, "Lucida Console", monospace;
-  font-size: 12px;
+#tweets:hover {
+  color: #999;
 }
+
+#tweets:hover input {
+  opacity: 1;
+}
+
+
+#tweets ul {
+  font-size: 12px;
+  list-style: none;
+  padding-left: 0;
+
+  color: rgba(102, 153, 50, 0.3);
+}
+
+#tweets ul:hover {
+  color: #687958;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+#tweets ul li:hover {
+  color: #690;
+}
+
+#tweets ul li {
+  padding-bottom: 10px;
+}
+
 #tweets ul li.odd {
   background-color: #444;
 }
+
 #tweets ul li.highlighted {
   background-color: #742;
 }
