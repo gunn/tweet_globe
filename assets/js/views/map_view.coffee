@@ -55,10 +55,10 @@ App.MapView = Ember.View.extend
       .append("g")
         .attr("id", "states")
 
-    d3.json "/world-countries.json", (collection)=>
+    d3.json "/countries.json", (world)=>
       @states
         .selectAll("path")
-          .data(collection.features)
+          .data(topojson.feature(world, world.objects["world-countries"]).features)
         .enter().append("path")
       @resize()
 

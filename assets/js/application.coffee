@@ -6,6 +6,7 @@
 #= require ember-auto
 
 #= require d3
+#= require topojson
 #= require socket.io
 
 
