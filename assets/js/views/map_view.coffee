@@ -37,6 +37,7 @@ App.MapView = Ember.View.extend
       @resize()
 
     @grid = @globe.append("path")
+      .attr("class", "graticule")
       .datum(@graticule)
       .attr("d", @path)
 

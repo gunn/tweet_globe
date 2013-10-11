@@ -43,7 +43,7 @@ input {
   list-style: none;
   padding-left: 0;
 
-  color: rgba(102, 153, 50, 0.3);
+  color: rgba(102, 153, 80, 0.3);
 }
 
 #tweets ul:hover {
@@ -52,7 +52,7 @@ input {
 }
 
 #tweets ul li:hover {
-  color: #690;
+  color: #8B3;
 }
 
 #tweets ul li {
@@ -115,13 +115,16 @@ line {
 }
 
 path {
-  fill: none;
   stroke: #002f00;
 }
 
 #states path {
   fill: rgba(0, 0, 0, 0.1);
   stroke: #006000;
+}
+
+path.graticule {
+  fill: none;
 }
 
 path.circle {
