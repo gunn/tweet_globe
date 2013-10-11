@@ -7,7 +7,7 @@ App.MapView = Ember.View.extend
       .scale(240)
       .clipAngle(90)
 
-    @tweetKey = (t)-> t.name
+    @tweetKey = (t)-> t.text
 
     App.tweetsController.on "filterEnd", => @drawPoints()
     App.tweetsController.on "resize", => @resize()

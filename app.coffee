@@ -62,10 +62,11 @@ class Tweet
 
   constructor: (data)->
     [@lat, @long] = data.geo.coordinates
+    @coordinates = [@long, @lat]
+
     @text = data.text
 
     @screen_name = data.user.screen_name
-    @name = data.user.name
     @country = data.place?.country
 
 
