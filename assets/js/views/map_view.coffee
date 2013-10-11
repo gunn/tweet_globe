@@ -3,22 +3,40 @@ App.MapView = Ember.View.extend
   controller: App.TweetsController
 
   init: ->
+    @tweetKey = (t)-> t.text
+
     @xy = d3.geo.orthographic()
       .scale(240)
       .clipAngle(90)
 
-    @tweetKey = (t)-> t.text
+    @path = d3.geo.path().projection(@xy)
+    @graticule = d3.geo.graticule()
 
     App.tweetsController.on "filterEnd", => @drawPoints()
     App.tweetsController.on "resize", => @resize()
 
   didInsertElement: ->
-    @globe     = d3.select("#globe")
-    @graticule = d3.geo.graticule()
+    @globe = d3.select("#globe")
 
-    @draggingSetup()
     @drawGlobe()
-    @mouseoverSetup()
+    @draggingSetup()
+    @labelSetup()
+
+  drawGlobe: ->
+    @states = @globe
+      .append("g")
+        .attr("id", "states")
+
+    d3.json "/countries.json", (world)=>
+      @states
+        .selectAll("path")
+          .data(topojson.feature(world, world.objects["world-countries"]).features)
+        .enter().append("path")
+      @resize()
+
+    @grid = @globe.append("path")
+      .datum(@graticule)
+      .attr("d", @path)
 
   draggingSetup: ->
     @globe.on "mousedown", =>
@@ -48,27 +66,8 @@ App.MapView = Ember.View.extend
       .on("mousemove", @mousemove)
       .on("mouseup", @mouseup)
 
-  drawGlobe: ->
-    @path = d3.geo.path().projection(@xy)
-
-    @states = @globe
-      .append("g")
-        .attr("id", "states")
-
-    d3.json "/countries.json", (world)=>
-      @states
-        .selectAll("path")
-          .data(topojson.feature(world, world.objects["world-countries"]).features)
-        .enter().append("path")
-      @resize()
-
-    @grid = @globe.append("path")
-      .datum(@graticule)
-      .attr("d", @path)
-
-
-  mouseoverSetup: ->
-    @globe.append("text")
+  labelSetup: ->
+    @label = @globe.append("text")
       .attr("class", "label")
 
     $("#globe").on "mousemove", (e)=>
@@ -92,8 +91,6 @@ App.MapView = Ember.View.extend
             .attr("x", @xy(tweet.coordinates)[0] - $(@label[0]).width()/2)
             .attr("y", @xy(tweet.coordinates)[1])
           return true
-
-    @label = d3.select(".label")
 
   drawPoints: ->
     filteredTweets = App.tweetsController.get "filteredTweets"
