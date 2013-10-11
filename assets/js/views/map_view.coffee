@@ -98,38 +98,28 @@ App.MapView = Ember.View.extend
   drawPoints: ->
     filteredTweets = App.tweetsController.get "filteredTweets"
 
-    circles = @globe.selectAll("circle:not(.exiting)")
+    circles = @globe.selectAll("path.circle:not(.exiting)")
       .data(filteredTweets, @tweetKey)
 
-    circles
-      .attr("cx", (t)=> @xy([t.long, t.lat])[0])
-      .attr("cy", (t)=> @xy([t.long, t.lat])[1])
+    circles.attr("d", @path.pointRadius(8))
 
     circles.enter()
-      .append("circle")
-        .attr("cx", (t)=> @xy([t.long, t.lat])[0])
-        .attr("cy", (t)=> @xy([t.long, t.lat])[1])
-        .attr("r", 1e-6)
+      .append("path")
+        .attr("class", "circle")
+        .attr("d", @path.pointRadius(8))
         .style("stroke-opacity", 1e-6)
         .transition()
           .duration(2000)
           .ease(Math.sqrt)
-          .attr("r", 10)
-          .style("stroke-opacity", 0.6)
+          .style("stroke-opacity", 1)
 
     circles.exit()
         .attr("class", "exiting")
       .transition()
         .duration(1000)
         .ease(Math.sqrt)
-        .attr("r", 20)
         .style("stroke-opacity", 1e-6)
         .remove()
-
-    circles
-      .style "display", (t)=>
-        p = { type: "Point" , coordinates: [t.long, t.lat] }
-        # @circle.clip(p) && "inline" || "none"
 
   resize: ->
     [stretchyDiv, w, h] = [$("#stretchy"), 1000, 600]

@@ -1,4 +1,6 @@
 App.Tweet = Ember.Object.extend
+  type: "Point"
+
   searchIndex: Em.auto "name", "text", "country", ()->
     [].slice.call(arguments)
       .join("\n")
