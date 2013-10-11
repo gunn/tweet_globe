@@ -1,28 +1,49 @@
-body {
+body, input {
   background-color: #111;
   color: #999;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-table thead th {
-  text-align: left;
-  font-size: 18px;
-  border-bottom: 3px;
-  border-bottom-color: #999;
+#tweets {
+  width: 40%;
+
+  position: absolute;
+  top:   0px;
+  right: 0px;
 }
-table td {
+
+input {
+  font-size: 15px;
+  background-color: #111;
+
+  float: right;
+  padding: 4px;
+  width:   120px;
+
+  border-width: 1px;
+  border-radius: 5px;
+  border-color: #999;
+  border-style: solid;
+}
+
+#tweets ul {
   font-family: Monaco, Consolas, "Lucida Console", monospace;
   font-size: 12px;
 }
-table tbody tr.odd {
+#tweets ul li.odd {
   background-color: #444;
 }
-table tbody tr.highlighted {
+#tweets ul li.highlighted {
   background-color: #742;
 }
 
 .float-right {
   float: right;
+}
+
+#tweets img {
+  width:  18px;
+  height: 18px;
 }
 
 #tweetBar {
