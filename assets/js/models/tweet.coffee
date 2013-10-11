@@ -1,6 +1,9 @@
 App.Tweet = Ember.Object.extend
   type: "Point"
 
+  init: ->
+    @set "time", new Date().toTimeString().split(/\s+/)[0]
+
   searchIndex: Em.auto "screen_name", "text", "country", ()->
     [].slice.call(arguments)
       .join("\n")

@@ -17,6 +17,7 @@ input {
   font-size: 13px;
   background-color: #111;
 
+  color: #999;
   opacity: 0.3;
 
   float: right;
@@ -31,6 +32,7 @@ input {
 
 #tweets:hover {
   color: #999;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 #tweets:hover input {
@@ -43,29 +45,48 @@ input {
   list-style: none;
   padding-left: 0;
 
-  color: rgba(102, 153, 80, 0.3);
+  color: rgba(102, 153, 80, 0.35);
 }
 
-#tweets ul:hover {
+#tweets ul li.odd {
+  color: rgba(102, 153, 80, 0.25);
+}
+
+#tweets:hover ul {
   color: #687958;
-  background-color: rgba(0, 0, 0, 0.5);
 }
 
-#tweets ul li:hover {
+#tweets:hover ul li.odd {
+  color: #455F2B;
+}
+
+#tweets ul li:hover, #tweets ul li.odd:hover {
   color: #8B3;
 }
 
 #tweets ul li {
-  padding-bottom: 10px;
-}
-
-#tweets ul li.odd {
-  background-color: #444;
+  /*padding-bottom: 10px;*/
 }
 
 #tweets ul li.highlighted {
   background-color: #742;
 }
+
+li {
+  clear: both;
+}
+
+.time {
+  width: 70px;
+  float: left;
+}
+
+.text {
+  padding-left: 70px;
+}
+
+
+
 
 .float-right {
   float: right;

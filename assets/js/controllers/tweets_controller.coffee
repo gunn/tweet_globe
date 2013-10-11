@@ -8,6 +8,8 @@ App.TweetsController = Ember.ArrayController.extend Ember.Evented,
   chartHeight: 400
   chartWidth:  1000
 
+  toggleOdd: true
+
   addTweet: (tweet)->
     @unshiftObject(tweet)
     @filterTweet(tweet)
@@ -16,7 +18,9 @@ App.TweetsController = Ember.ArrayController.extend Ember.Evented,
 
   filterTweet: (tweet)->
     if tweet.hasContent @get("searchTerm").toLowerCase()
+      tweet.set "odd", (@toggleOdd = !@toggleOdd)
       @filteredTweets.unshiftObject(tweet)
+
       if @filteredTweets.length > @maxDisplayedTweets
         @filteredTweets.popObject()
 

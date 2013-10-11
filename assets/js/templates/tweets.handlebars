@@ -17,8 +17,16 @@
 
   <ul>
     {{#each App.tweetsController.filteredTweets}}
-      <li>
-        {{text}}
+      <li {{bindAttr class=odd}}>
+        <div>
+          <div class="time">
+            {{time}}
+          </div>
+
+          <div class="text">
+            {{text}}
+          </div>
+        </div>
       </li>
     {{/each}}
   </ul>
