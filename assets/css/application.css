@@ -73,6 +73,10 @@ path {
   stroke: #006000;
 }
 
+path.circle {
+  stroke: #BE0;
+}
+
 circle {
   fill-opacity: 0;
   stroke: #AF0;
