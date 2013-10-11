@@ -77,7 +77,7 @@ App.MapView = Ember.View.extend
 
         @label.style("display", "none")
 
-      if e.target?.tagName == "circle"
+      if e.target && $(e.target).is(".circle")
         circle = d3.select(e.target)
 
         if circle.style("display") == "inline"
@@ -89,8 +89,8 @@ App.MapView = Ember.View.extend
           @label
             .style("display", "inline")
             .text(tweet.text)
-            .attr("x", circle.attr("cx") - $(@label[0]).width()/2)
-            .attr("y", circle.attr("cy"))
+            .attr("x", @xy(tweet.coordinates)[0] - $(@label[0]).width()/2)
+            .attr("y", @xy(tweet.coordinates)[1])
           return true
 
     @label = d3.select(".label")
