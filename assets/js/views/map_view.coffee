@@ -20,6 +20,7 @@ App.MapView = Ember.View.extend
 
     @drawGlobe()
     @draggingSetup()
+    @rotateSetup()
     @labelSetup()
 
   drawGlobe: ->
@@ -37,6 +38,17 @@ App.MapView = Ember.View.extend
     @grid = @globe.append("path")
       .datum(@graticule)
       .attr("d", @path)
+
+  rotateSetup: ->
+    @globe.on "mouseover", => @hovering = true
+    @globe.on "mouseout",  => @hovering = false
+
+    d3.timer =>
+      unless @origin || @hovering
+        r = @xy.rotate()
+        @xy.rotate [r[0]+0.5, r[1], r[2]]
+        @refresh()
+      null
 
   draggingSetup: ->
     @globe.on "mousedown", =>
