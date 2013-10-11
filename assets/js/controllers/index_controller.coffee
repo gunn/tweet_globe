@@ -1,4 +1,4 @@
-App.TweetsController = Ember.ArrayController.extend Ember.Evented,
+App.IndexController = Ember.ArrayController.extend Ember.Evented,
   content: []
   filteredTweets: []
   maxStoredTweets: 800
@@ -9,6 +9,9 @@ App.TweetsController = Ember.ArrayController.extend Ember.Evented,
   chartWidth:  1000
 
   toggleOdd: true
+
+  init: ->
+    App.indexController = @
 
   addTweet: (tweet)->
     @unshiftObject(tweet)

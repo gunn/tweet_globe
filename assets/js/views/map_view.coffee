@@ -13,8 +13,8 @@ App.MapView = Ember.View.extend
     @path = d3.geo.path().projection(@xy)
     @graticule = d3.geo.graticule()
 
-    App.tweetsController.on "filterEnd", => @drawPoints()
-    App.tweetsController.on "resize", => @resize()
+    App.indexController.on "filterEnd", => @drawPoints()
+    App.indexController.on "resize", => @resize()
 
   didInsertElement: ->
     @globe = d3.select("#globe")
@@ -106,7 +106,7 @@ App.MapView = Ember.View.extend
           return true
 
   drawPoints: ->
-    filteredTweets = App.tweetsController.get "filteredTweets"
+    filteredTweets = App.indexController.get "filteredTweets"
 
     circles = @globe.selectAll("path.circle:not(.exiting)")
       .data(filteredTweets, @tweetKey)

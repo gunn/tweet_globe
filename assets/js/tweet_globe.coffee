@@ -2,18 +2,16 @@ window.App = Ember.Application.create
   rootElement:  "#content"
   USE_FIXTURES: false
 
-App.ready = ->
-  App.tweetsController = App.TweetsController.create()
+App.IndexRoute = Em.Route.extend
+  setupController: (controller)->
+    if App.USE_FIXTURES
+      for tweetFixture in App.SAMPLE_TWEETS
+        controller.addTweet App.Tweet.create(tweetFixture)
+    else
+      socket = io.connect '/'
+      socket.on 'news', (data)->
+        for tweetData in data
+          controller.addTweet App.Tweet.create(tweetData)
+        controller.trigger "filterEnd"
 
-  if App.USE_FIXTURES
-    for tweetFixture in App.SAMPLE_TWEETS
-      App.tweetsController.addTweet App.Tweet.create(tweetFixture)
-  else
-    socket = io.connect '/'
-    socket.on 'news', (data)->
-      for tweetData in data
-        App.tweetsController.addTweet App.Tweet.create(tweetData)
-      App.tweetsController.trigger "filterEnd"
-
-  $(window).resize ->
-    App.tweetsController.trigger "resize"
+    controller.trigger "filterEnd"
