@@ -114,7 +114,7 @@ App.MapView = Ember.View.extend
           .style("stroke-opacity", 1)
 
     circles.exit()
-        .attr("class", "exiting")
+        .attr("class", "circle exiting")
       .transition()
         .duration(1000)
         .ease(Math.sqrt)
