@@ -132,15 +132,15 @@ App.MapView = Ember.View.extend
         .remove()
 
   resize: ->
-    [stretchyDiv, w, h] = [$("#stretchy"), 1000, 600]
+    w = $( window ).width()
+    h = $( window ).height()-50
 
-    width = stretchyDiv.width()
-    height = h*(width / w)
+    s = Math.min(w, h)/2
 
-    stretchyDiv.height height
+    o = Math.max(w - h, 0)/4
 
-    @xy.scale(height/2)
-       .translate [width/2, height/2]
+    @xy.scale(s)
+       .translate [w/2-o, h/2]
 
     @refresh()
 

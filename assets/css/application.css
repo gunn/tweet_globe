@@ -87,30 +87,11 @@ li {
 
 
 
-
-.float-right {
-  float: right;
+#globe {
+  position: fixed;
 }
 
-#tweets img {
-  width:  18px;
-  height: 18px;
-}
-
-#tweetBar {
-  position: relative;
-}
-
-#tweetBar #tweetSearch {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-}
-
-#stretchy {
-  border-radius: 10px;
-  margin-bottom: 15px;
-  height: 400px;
+text.label {
   font: 10px sans-serif;
 }
 
