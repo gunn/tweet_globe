@@ -8,6 +8,7 @@ App.MapView = Ember.View.extend
     @xy = d3.geo.orthographic()
       .scale(240)
       .clipAngle(90)
+      .rotate([0, -15])
 
     @path = d3.geo.path().projection(@xy)
     @graticule = d3.geo.graticule()
@@ -46,7 +47,7 @@ App.MapView = Ember.View.extend
     d3.timer =>
       unless @origin || @hovering
         r = @xy.rotate()
-        @xy.rotate [r[0]+0.5, r[1], r[2]]
+        @xy.rotate [r[0]+0.5, r[1]]
         @refresh()
       null
 
@@ -61,11 +62,10 @@ App.MapView = Ember.View.extend
 
     @mousemove = =>
       if @origin
-        @xy.rotate([
-          (d3.event.x/2) - @origin.x,
-          @origin.y - (d3.event.y/2),
-          @xy.rotate()[2]
-        ])
+        @xy.rotate [
+          (d3.event.x/2) - @origin.x
+          @origin.y - (d3.event.y/2)
+        ]
 
         @refresh()
 
