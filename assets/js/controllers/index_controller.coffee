@@ -12,6 +12,7 @@ App.IndexController = Ember.ArrayController.extend Ember.Evented,
 
   init: ->
     App.indexController = @
+    $(window).resize => @trigger "resize"
 
   addTweet: (tweet)->
     @unshiftObject(tweet)
