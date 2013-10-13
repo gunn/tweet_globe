@@ -4,7 +4,7 @@ connect = require('connect')
 http    = require('http')
 
 hbsTags = ()->
-  tags = for name in ["application", "chart", "tweets"]
+  tags = for name in ["chart", "tweets"]
     hbsTag(name)
 
   tags.join("\n")
