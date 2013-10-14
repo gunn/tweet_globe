@@ -71,10 +71,10 @@ class Tweet
 
 
 ntwitter = new require('ntwitter')
-  consumer_key:        'gcnju0wIvzpwsbu7gdR2pA'
-  consumer_secret:     'lGVCmvWRwgEG4RAqMUCS5xFhXRrKeBquGVTd0qRY'
-  access_token_key:    '98638549-zuVhkvxPUV4CoIJXqE4EMhvmrgNg11rvhmoHPSYv4'
-  access_token_secret: 'jpjXU0xXCUTh2LwF8HTzrxP0cvMd2uil2loNamhDk'
+  consumer_key        : process.env.CONSUMER_KEY
+  consumer_secret     : process.env.CONSUMER_SECRET
+  access_token_key    : process.env.ACCESS_TOKEN_KEY
+  access_token_secret : process.env.ACCESS_TOKEN_SECRET
 
 ntwitter.stream 'statuses/filter',
   locations: "-180,-90,180,90",
