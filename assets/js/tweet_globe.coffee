@@ -11,6 +11,3 @@ App.IndexRoute = Em.Route.extend
       socket.on 'news', (data)->
         for tweetData in data
           controller.addTweet App.Tweet.create(tweetData)
-        controller.trigger "filterEnd"
-
-    controller.trigger "filterEnd"

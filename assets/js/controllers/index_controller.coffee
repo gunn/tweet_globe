@@ -1,4 +1,4 @@
-App.IndexController = Ember.ArrayController.extend Ember.Evented,
+App.IndexController = Ember.ArrayController.extend
   content: []
   filteredTweets: []
   maxStoredTweets: 800
@@ -12,7 +12,6 @@ App.IndexController = Ember.ArrayController.extend Ember.Evented,
 
   init: ->
     App.indexController = @
-    $(window).resize => @trigger "resize"
 
   addTweet: (tweet)->
     @unshiftObject(tweet)
@@ -34,7 +33,5 @@ App.IndexController = Ember.ArrayController.extend Ember.Evented,
     for tweet in @content
       @filterTweet tweet
       break if @filteredTweets.length >= @maxDisplayedTweets
-
-    @trigger "filterEnd"
 
   ).observes "searchTerm"
