@@ -45,7 +45,7 @@ class Tweet
 
   @bufferSize  : 20
   @historySize : 100
-  @maxRate     : 2
+  @maxRate     : 5
 
   @add: (data)->
     @buffer.unshift new Tweet(data)
@@ -83,11 +83,11 @@ ntwitter.stream 'statuses/filter',
 
 
 io = require('socket.io').listen app
-io.set('transports', ['websocket'])
+io.set('log level', 0)
 
 io.sockets.on 'connection', (socket)->
   socket.emit "news", Tweet.history
 
 setInterval ->
   io.sockets.emit "news", Tweet.getLatest()
-, 200
+, 500
