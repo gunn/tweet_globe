@@ -4,7 +4,7 @@ connect = require('connect')
 http    = require('http')
 
 hbsTags = ()->
-  tags = for name in ["chart", "tweets"]
+  tags = for name in ["chart", "index"]
     hbsTag(name)
 
   tags.join("\n")
@@ -31,9 +31,6 @@ app = connect()
         #{css("application")}
       </head>
       <body>
-        <div class='container-fluid' id='content'>
-
-        </div>
         #{hbsTags()}
         #{js("application")}
       </body>

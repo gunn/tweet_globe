@@ -1,5 +1,4 @@
 window.App = Ember.Application.create
-  rootElement:  "#content"
   USE_FIXTURES: false
 
 App.IndexRoute = Em.Route.extend

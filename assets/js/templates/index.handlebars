@@ -3,17 +3,17 @@
 <div id="tweets">
   <span id="info">
     Displaying
-    {{App.indexController.filteredTweets.length}}
+    {{filteredTweets.length}}
     of
-    {{App.indexController.length}}
+    {{length}}
   </span>
 
   {{ view Ember.TextField
-     placeholder="Filter"
-     valueBinding="App.indexController.searchTerm" }}
+     placeholder  = "Filter"
+     valueBinding = searchTerm }}
 
   <ul>
-    {{#each App.indexController.filteredTweets}}
+    {{#each filteredTweets}}
       <li {{bindAttr class=odd}}>
         <div>
           <div class="time">
