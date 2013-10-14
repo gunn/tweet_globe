@@ -9,7 +9,7 @@
     "connect": "*",
     "connect-assets": "*",
     "ntwitter": "*",
-    "socket.io": "*",
+    "socket.io": "0.9.16",
     "coffee-script": "*"
   },
   "engines": {

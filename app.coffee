@@ -83,7 +83,7 @@ ntwitter.stream 'statuses/filter',
 
 
 io = require('socket.io').listen app
-io.set('log level', 0)
+io.set('transports', ['websocket'])
 
 io.sockets.on 'connection', (socket)->
   socket.emit "news", Tweet.history
