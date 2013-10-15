@@ -24,6 +24,17 @@ App.MapView = Ember.View.extend
     @rotateSetup()
     @labelSetup()
 
+  rotateTo: (->
+    d3.transition()
+      .duration(1250)
+      .tween("rotate", =>
+        p = d3.geo.centroid @get("selectedTweet")
+        r = d3.interpolate @xy.rotate(), [-p[0], -p[1]]
+
+        (t)=> @xy.rotate r(t)
+      ).transition()
+  ).observes "selectedTweet"
+
   drawGlobe: ->
     @states = @globe
       .append("g")
@@ -42,11 +53,11 @@ App.MapView = Ember.View.extend
       .attr("d", @path)
 
   rotateSetup: ->
-    @globe.on "mouseover", => @hovering = true
-    @globe.on "mouseout",  => @hovering = false
+    @globe.on "mouseover", => @paused = true
+    @globe.on "mouseout",  => @paused = false
 
     d3.timer =>
-      unless @origin || @hovering
+      unless @origin || @paused
         r = @xy.rotate()
         @xy.rotate [r[0]+0.5, r[1]]
         @refresh()

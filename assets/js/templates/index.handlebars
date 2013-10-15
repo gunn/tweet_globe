@@ -1,4 +1,6 @@
-{{view App.MapView tweetsBinding=filteredTweets }}
+{{view App.MapView
+       tweetsBinding=filteredTweets
+       selectedTweetBinding=selectedTweet }}
 
 <div id="tweets">
   <span id="info">
@@ -14,7 +16,7 @@
 
   <ul>
     {{#each filteredTweets}}
-      <li {{bindAttr class=odd}}>
+      <li {{bindAttr class=odd}} {{action selectTweet this}} >
         <div>
           <div class="time">
             {{time}}

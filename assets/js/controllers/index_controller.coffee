@@ -11,6 +11,10 @@ App.IndexController = Ember.ArrayController.extend
   init: ->
     App.indexController = @
 
+  actions:
+    selectTweet: (tweet)->
+      @set "selectedTweet", tweet
+
   addTweet: (tweet)->
     @unshiftObject tweet
     @filterTweet   tweet unless @paused
