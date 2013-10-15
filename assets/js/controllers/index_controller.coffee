@@ -1,26 +1,23 @@
 App.IndexController = Ember.ArrayController.extend
-  content: []
-  filteredTweets: []
-  maxStoredTweets: 800
-  maxDisplayedTweets: 40
-  searchTerm: ""
+  content            : []
+  filteredTweets     : []
 
-  chartHeight: 400
-  chartWidth:  1000
-
-  toggleOdd: true
+  maxStoredTweets    : 800
+  maxDisplayedTweets : 40
+  searchTerm         : ""
 
   init: ->
     App.indexController = @
 
   addTweet: (tweet)->
-    @unshiftObject(tweet)
-    @filterTweet(tweet)
-    if @content.length > @maxStoredTweets
-      @popObject()
+    @unshiftObject tweet
+    @filterTweet   tweet
+    @popObject() if @length > @maxStoredTweets
+
+  term: Em.auto "searchTerm", (term)-> term.toLowerCase()
 
   filterTweet: (tweet)->
-    if tweet.hasContent @get("searchTerm").toLowerCase()
+    if tweet.hasContent @get("term")
       tweet.set "odd", (@toggleOdd = !@toggleOdd)
       @filteredTweets.unshiftObject(tweet)
 
@@ -30,8 +27,7 @@ App.IndexController = Ember.ArrayController.extend
   filterTweets: (->
     @set "filteredTweets", []
 
-    for tweet in @content
+    for tweet in @content by -1
       @filterTweet tweet
       break if @filteredTweets.length >= @maxDisplayedTweets
-
   ).observes "searchTerm"
