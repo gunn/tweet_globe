@@ -64,6 +64,7 @@ class Tweet
     @text = data.text
 
     @screen_name = data.user.screen_name
+    @profile_image_url = data.user.profile_image_url
     @country = data.place?.country
 
 
