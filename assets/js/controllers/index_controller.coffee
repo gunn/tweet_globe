@@ -2,7 +2,7 @@ App.IndexController = Ember.ArrayController.extend
   content            : []
   filteredTweets     : []
 
-  maxStoredTweets    : 800
+  maxStoredTweets    : 2000
   maxDisplayedTweets : 40
   searchTerm         : ""
 
@@ -12,7 +12,7 @@ App.IndexController = Ember.ArrayController.extend
   addTweet: (tweet)->
     @unshiftObject tweet
     @filterTweet   tweet
-    @popObject() if @length > @maxStoredTweets
+    @popObject() if @content.length > @maxStoredTweets
 
   term: Em.auto "searchTerm", (term)-> term.toLowerCase()
 
