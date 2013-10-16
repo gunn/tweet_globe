@@ -1,10 +1,10 @@
 App.MapView = Ember.View.extend
-  defaultTemplate: Ember.Handlebars.compile("<canvas id='globe'></canvas>")
-  controller: App.TweetsController
+  classNames: "globe"
 
   init: ->
-    # @tweetKey = (t)-> t.text
+    @_super()
 
+    @tweetKey = (t)-> t.text
     @xy = d3.geo.orthographic()
       .scale(240)
       .clipAngle(90)
@@ -12,14 +12,20 @@ App.MapView = Ember.View.extend
 
     @graticule = d3.geo.graticule()
 
-
   didInsertElement: ->
-    @globe = d3.select("#globe")
-    @c = @globe.node().getContext("2d")
+    @globe = d3.select @get("element")
+
+    @canvas = @globe.append("canvas")
+    @svg    = @globe.append("svg")
+
+    @canvasContext = @canvas.node().getContext("2d")
 
     @path = d3.geo.path()
       .projection(@xy)
-      .context(@c)
+
+    @canvasPath = d3.geo.path()
+      .projection(@xy)
+      .context(@canvasContext)
 
     d3.json "/countries.json", (world)=>
       @borderData = topojson.feature(world, world.objects["world-countries"])
@@ -114,36 +120,36 @@ App.MapView = Ember.View.extend
   #     .attr("x", @xy(tweet.coordinates)[0] - $(@label[0]).width()/2)
   #     .attr("y", @xy(tweet.coordinates)[1])
 
-  # drawPoints: (->
-  #   circles = @globe.selectAll("path.circle:not(.exiting)")
-  #     .data(@get("tweets"), @tweetKey)
+  drawPoints: (->
+    circles = @svg.selectAll("path.circle:not(.exiting)")
+      .data(@get("tweets"), @tweetKey)
 
-  #   circles.attr("d", @path.pointRadius(8))
+    circles.attr("d", @path.pointRadius(8))
 
-  #   circles.enter()
-  #     .append("path")
-  #       .attr("class", "circle")
-  #       .attr("d", @path.pointRadius(8))
-  #       .style("stroke-opacity", 1e-6)
-  #       .transition()
-  #         .duration(2000)
-  #         .ease(Math.sqrt)
-  #         .style("stroke-opacity", 1)
+    circles.enter()
+      .append("path")
+        .attr("class", "circle")
+        .attr("d", @path.pointRadius(8))
+        .style("stroke-opacity", 1e-6)
+        .transition()
+          .duration(2000)
+          .ease(Math.sqrt)
+          .style("stroke-opacity", 1)
 
-  #   circles.exit()
-  #       .attr("class", "circle exiting")
-  #     .transition()
-  #       .duration(1000)
-  #       .ease(Math.sqrt)
-  #       .style("stroke-opacity", 1e-6)
-  #       .remove()
-  # ).observes("tweets.[]")
+    circles.exit()
+        .attr("class", "circle exiting")
+      .transition()
+        .duration(1000)
+        .ease(Math.sqrt)
+        .style("stroke-opacity", 1e-6)
+        .remove()
+  ).observes("tweets.[]")
 
   resize: ->
     w = $( window ).width()
     h = $( window ).height()-50
 
-    @globe
+    @canvas
       .attr("width",  w)
       .attr("height", h)
 
@@ -156,17 +162,19 @@ App.MapView = Ember.View.extend
     @refresh()
 
   strokePath: (data, colour)->
-    @c.beginPath()
-    @c.strokeStyle = colour
-    @path data
-    @c.stroke()
+    @canvasContext.beginPath()
+    @canvasContext.strokeStyle = colour
+    @canvasPath data
+    @canvasContext.stroke()
 
   refresh: ->
-    @c.clearRect 0, 0, $("#globe").width(), $("#globe").height()
-    @c.lineWidth = 1
+    @canvasContext.clearRect 0, 0, @$("canvas").width(), @$("canvas").height()
+    @canvasContext.lineWidth = 1
 
     @strokePath @graticule(), "#002f00"
     @strokePath @borderData,  "#006000"
+
+    @drawPoints()
 
     # if tweet = @highlightedTweet
     #   @label
