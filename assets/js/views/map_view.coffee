@@ -33,13 +33,13 @@ App.MapView = Ember.View.extend
 
     @draggingSetup()
     @rotateSetup()
-    # @labelSetup()
+    @labelSetup()
 
     $(window).resize => @resize()
 
   rotateTo: (->
     @paused = true
-    # @highlightTweet @get("selectedTweet")
+    @set "highlightedTweet", @get("selectedTweet")
 
     d3.transition()
       .duration(1000)
@@ -93,32 +93,20 @@ App.MapView = Ember.View.extend
       .on("mousemove", @mousemove)
       .on("mouseup", @mouseup)
 
-  # labelSetup: ->
-  #   @label = @globe.append("text")
-  #     .attr("class", "label")
+  labelSetup: ->
+    @label = @globe.append("div")
+      .attr("id", "label")
 
-  #   $("#globe").on "mousemove", (e)=>
-  #     if @highlightedTweet && @highlightedTweet != e.target?.__data__
-  #       @highlightedTweet.set "highlighted", false
+    @$("svg").on "mousemove", (e)=>
+      if @highlightedTweet && @highlightedTweet != e.target?.__data__
+        @label.style("display", "none")
 
-  #       @label.style("display", "none")
+      if e.target && $(e.target).is(".circle")
+        circle = d3.select(e.target)
 
-  #     if e.target && $(e.target).is(".circle")
-  #       circle = d3.select(e.target)
-
-  #       if circle.style("display") == "inline"
-  #         @highlightTweet e.target.__data__
-  #         return true
-
-  # highlightTweet: (tweet)->
-  #   tweet.set "highlighted", true
-  #   @highlightedTweet = tweet
-
-  #   @label
-  #     .style("display", "inline")
-  #     .text(tweet.text)
-  #     .attr("x", @xy(tweet.coordinates)[0] - $(@label[0]).width()/2)
-  #     .attr("y", @xy(tweet.coordinates)[1])
+        if circle.style("display") == "inline"
+          @set "highlightedTweet", e.target.__data__
+          return true
 
   drawPoints: (->
     @svg.selectAll("path.circle")
@@ -162,6 +150,18 @@ App.MapView = Ember.View.extend
 
     @refresh()
 
+  updateLabel: (->
+    if tweet = @highlightedTweet
+      x = @xy(tweet.coordinates)[0] - $(@label[0]).width()/2
+      y = @xy(tweet.coordinates)[1]
+
+      @label
+        .text(tweet.text)
+        .style("display", "block")
+        .style("top",  y + "px")
+        .style("left", x + "px")
+  ).observes("highlightedTweet")
+
   strokePath: (data, colour)->
     @canvasContext.beginPath()
     @canvasContext.strokeStyle = colour
@@ -176,8 +176,4 @@ App.MapView = Ember.View.extend
     @strokePath @borderData,  "#006000"
 
     @drawPoints()
-
-    # if tweet = @highlightedTweet
-    #   @label
-    #     .attr("x", @xy(tweet.coordinates)[0] - $(@label[0]).width()/2)
-    #     .attr("y", @xy(tweet.coordinates)[1])
+    @updateLabel()

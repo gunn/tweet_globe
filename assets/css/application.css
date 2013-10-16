@@ -91,6 +91,14 @@ li {
 
 
 
+#label {
+  width: 450px;
+  text-align: center;
+  position: absolute;
+  color: #CE0;
+  font-size: 12px;
+}
+
 .globe svg, .globe canvas {
   position: fixed;
 }
