@@ -26,6 +26,7 @@ App.MapView = Ember.View.extend
 
   rotateTo: (->
     @paused = true
+    @highlightTweet @get("selectedTweet")
 
     d3.transition()
       .duration(1000)
@@ -110,17 +111,18 @@ App.MapView = Ember.View.extend
         circle = d3.select(e.target)
 
         if circle.style("display") == "inline"
-          tweet  = e.target.__data__
-          tweet.set "highlighted", true
-
-          @highlightedTweet = tweet
-
-          @label
-            .style("display", "inline")
-            .text(tweet.text)
-            .attr("x", @xy(tweet.coordinates)[0] - $(@label[0]).width()/2)
-            .attr("y", @xy(tweet.coordinates)[1])
+          @highlightTweet e.target.__data__
           return true
+
+  highlightTweet: (tweet)->
+    tweet.set "highlighted", true
+    @highlightedTweet = tweet
+
+    @label
+      .style("display", "inline")
+      .text(tweet.text)
+      .attr("x", @xy(tweet.coordinates)[0] - $(@label[0]).width()/2)
+      .attr("y", @xy(tweet.coordinates)[1])
 
   drawPoints: (->
     circles = @globe.selectAll("path.circle:not(.exiting)")
@@ -163,5 +165,10 @@ App.MapView = Ember.View.extend
   refresh: ->
     @globe.selectAll("path")
       .attr "d", @path
+
+    if tweet = @highlightedTweet
+      @label
+        .attr("x", @xy(tweet.coordinates)[0] - $(@label[0]).width()/2)
+        .attr("y", @xy(tweet.coordinates)[1])
 
     @drawPoints()

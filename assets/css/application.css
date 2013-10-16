@@ -22,7 +22,7 @@ input {
   background-color: #111;
 
   color: #999;
-  opacity: 0.3;
+  opacity: 0.55;
 
   float: right;
   padding: 1px 6px;
@@ -95,10 +95,6 @@ li {
   position: fixed;
 }
 
-text.label {
-  font: 10px sans-serif;
-}
-
 .axis path,
 .axis line,
 .axis text {
@@ -145,4 +141,6 @@ circle {
 
 text {
   fill: #AF0;
+  font-family: Monaco, Consolas, "Lucida Console", monospace;
+  font-size: 12px;
 }
