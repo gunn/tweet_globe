@@ -16,6 +16,7 @@ App.MapView = Ember.View.extend
     @globe = d3.select @get("element")
 
     @canvas = @globe.append("canvas")
+    @label  = @globe.append("div").attr("id", "label")
     @svg    = @globe.append("svg")
 
     @canvasContext = @canvas.node().getContext("2d")
@@ -94,19 +95,14 @@ App.MapView = Ember.View.extend
       .on("mouseup", @mouseup)
 
   labelSetup: ->
-    @label = @globe.append("div")
-      .attr("id", "label")
-
     @$("svg").on "mousemove", (e)=>
-      if @highlightedTweet && @highlightedTweet != e.target?.__data__
-        @label.style("display", "none")
-
       if e.target && $(e.target).is(".circle")
         circle = d3.select(e.target)
 
         if circle.style("display") == "inline"
           @set "highlightedTweet", e.target.__data__
-          return true
+      else
+        @set "highlightedTweet", null
 
   drawPoints: (->
     @svg.selectAll("path.circle")
@@ -160,6 +156,9 @@ App.MapView = Ember.View.extend
         .style("display", "block")
         .style("top",  y + "px")
         .style("left", x + "px")
+    else
+      @label.style "display", "none"
+
   ).observes("highlightedTweet")
 
   strokePath: (data, colour)->
