@@ -104,6 +104,10 @@ App.MapView = Ember.View.extend
       else
         @set "highlightedTweet", null
 
+    @globe.on "click", (e)=>
+      if @highlightedTweet
+        @set "selectedTweet", @highlightedTweet
+
   drawPoints: (->
     @svg.selectAll("path.circle")
       .attr("d", @path.pointRadius(8))
