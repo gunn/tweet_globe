@@ -120,12 +120,12 @@ path {
   stroke: #002f00;
 }
 
-#states path {
+#states {
   fill: rgba(0, 0, 0, 0.1);
   stroke: #006000;
 }
 
-path.graticule {
+#graticule {
   fill: none;
 }
 

@@ -44,18 +44,16 @@ App.MapView = Ember.View.extend
 
   drawGlobe: ->
     @states = @globe
-      .append("g")
-        .attr("id", "states")
+      .append("path")
+      .attr("id", "states")
 
     d3.json "/countries.json", (world)=>
-      @states
-        .selectAll("path")
-          .data(topojson.feature(world, world.objects["world-countries"]).features)
-        .enter().append("path")
+      @states.datum(topojson.feature(world, world.objects["world-countries"]))
+
       @resize()
 
     @grid = @globe.append("path")
-      .attr("class", "graticule")
+      .attr("id", "graticule")
       .datum(@graticule)
       .attr("d", @path)
 
