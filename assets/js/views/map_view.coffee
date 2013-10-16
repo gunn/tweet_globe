@@ -121,10 +121,11 @@ App.MapView = Ember.View.extend
   #     .attr("y", @xy(tweet.coordinates)[1])
 
   drawPoints: (->
+    @svg.selectAll("path.circle")
+      .attr("d", @path.pointRadius(8))
+
     circles = @svg.selectAll("path.circle:not(.exiting)")
       .data(@get("tweets"), @tweetKey)
-
-    circles.attr("d", @path.pointRadius(8))
 
     circles.enter()
       .append("path")
