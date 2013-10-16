@@ -168,5 +168,3 @@ App.MapView = Ember.View.extend
       @label
         .attr("x", @xy(tweet.coordinates)[0] - $(@label[0]).width()/2)
         .attr("y", @xy(tweet.coordinates)[1])
-
-    @drawPoints()
