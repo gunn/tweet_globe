@@ -91,42 +91,8 @@ li {
 
 
 
-#globe {
+.globe svg, .globe canvas {
   position: fixed;
-}
-
-.axis path,
-.axis line,
-.axis text {
-  fill: none;
-  stroke: #CCC;
-  shape-rendering: crispEdges;
-}
-
-.bar {
-  fill: #f60;
-}
-
-.x.axis path {
-  display: none;
-}
-
-line {
-  stroke: brown;
-  stroke-dasharray: 4,2;
-}
-
-path {
-  stroke: #002f00;
-}
-
-#states {
-  fill: rgba(0, 0, 0, 0.1);
-  stroke: #006000;
-}
-
-#graticule {
-  fill: none;
 }
 
 path.circle {
@@ -134,13 +100,3 @@ path.circle {
   stroke: #CE0;
 }
 
-circle {
-  fill-opacity: 0;
-  stroke: #AF0;
-}
-
-text {
-  fill: #AF0;
-  font-family: Monaco, Consolas, "Lucida Console", monospace;
-  font-size: 12px;
-}
