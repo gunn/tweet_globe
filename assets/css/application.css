@@ -52,6 +52,11 @@ input {
   color: rgba(102, 153, 80, 0.35);
 }
 
+#tweets ul li, path.circle, #label {
+  cursor: pointer;
+  cursor: hand;
+}
+
 #tweets ul li.odd {
   color: rgba(102, 153, 80, 0.25);
 }
