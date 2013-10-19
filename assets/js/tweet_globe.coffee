@@ -7,7 +7,7 @@ App.IndexRoute = Em.Route.extend
       for tweetFixture in App.SAMPLE_TWEETS
         controller.addTweet App.Tweet.create(tweetFixture)
     else
-      socket = io.connect 'wss://'
+      socket = io.connect '/', secure: true
       socket.on 'news', (data)->
         for tweetData in data
           controller.addTweet App.Tweet.create(tweetData)
