@@ -1,6 +1,6 @@
 # Tweet Globe
 
-A 3D interactive globe of live tweets. See it running at http://tweet-globe.herokuapp.com
+A 3D interactive globe of live tweets. See it running at https://tweet-globe.herokuapp.com
 
 ![Tweet Globe](https://raw.github.com/gunn/tweet_globe/master/animation.gif)
 
