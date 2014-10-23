@@ -138,9 +138,12 @@ App.MapView = Ember.View.extend
     w = $( window ).width()
     h = $( window ).height()-50
 
-    @canvas
-      .attr("width",  w)
-      .attr("height", h)
+    dimensions =
+      width:  w
+      height: h
+
+    @canvas.attr dimensions
+    @svg.attr    dimensions
 
     s = Math.min(w, h)/2
     o = Math.max(w - h, 0)/4

@@ -1,6 +1,6 @@
 {{view App.MapView
-       tweetsBinding=filteredTweets
-       selectedTweetBinding=selectedTweet }}
+       tweets=filteredTweets
+       selectedTweet=selectedTweet }}
 
 <div id="tweets">
   <span id="info">
@@ -11,8 +11,8 @@
   </span>
 
   {{ view Ember.TextField
-     placeholder  = "Filter"
-     valueBinding = searchTerm }}
+     placeholder="Filter"
+     value=searchTerm }}
 
   <ul>
     {{#each filteredTweets}}
