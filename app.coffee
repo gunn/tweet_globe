@@ -17,8 +17,18 @@ hbsTag = (name)->
   </script>
   """
 
+requireHTTPS = (req, res, next)->
+  if process.env.FORCE_SSL && req.headers['x-forwarded-proto'] != 'https'
+     res.writeHead 301,
+       'Content-Type': 'text/plain', 
+       'Location':     'https://'+req.headers.host+req.url
+
+     res.end 'Redirecting to SSL\n'
+  else
+    next()
+
 app = connect()
-  .use(connect.logger('dev'))
+  .use(requireHTTPS)
   .use(require('connect-assets')())
   .use(connect.static('public'))
   .use((req, res)->
@@ -63,7 +73,7 @@ class Tweet
 
     @text = data.text
 
-    # @screen_name = data.user.screen_name
+    @screen_name = data.user.screen_name
     # @profile_image_url = data.user.profile_image_url
     @country = data.place?.country
 
