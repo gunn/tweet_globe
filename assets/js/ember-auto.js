@@ -1,10 +1,10 @@
 // ==========================================================================
 // Project:   Ember Auto
-// Copyright: ©2013 Arthur Gunn.
+// Copyright: ©2014 Arthur Gunn.
 // License:   Licensed under MIT license (see license.js)
 // ==========================================================================
 
-// 28abbfc (2013-10-04 15:37:06 +1300)
+// 786b05b (2014-08-28 15:29:42 +1200)
 
 (function() {
 
@@ -15,32 +15,24 @@ Ember.AutoProperty = function(func, opts) {
   return cp;
 };
 
-Ember.ComputedProperty.prototype.get = function(obj, keyName) {
-  var ret, cache, meta, chainNodes, args;
-
-  if (this._cacheable) {
-    meta  = metaFor(obj);
-    cache = meta.cache;
-    if (keyName in cache) { return cache[keyName]; }
-  }
+var originalGet = Ember.ComputedProperty.prototype.get;
+Ember.ComputedProperty.prototype.get = function (obj, keyName) {
+  var target = this;
 
   if (this._isAutoProperty) {
-    args = argumentsFor(obj, keyName, this);
-  } else {
-    args = [keyName];
+    var originalFunc  = this.func,
+        args          = argumentsFor(obj, keyName, this);
+        
+    target = {
+      _cacheable: this._cacheable,
+      _dependentKeys: this._dependentKeys,
+      func: function () {
+        return originalFunc.apply(obj, args);
+      }
+    };
   }
 
-  if (this._cacheable) {
-    ret        = cache[keyName] = this.func.apply(obj, args);
-    chainNodes = meta.chainWatchers && meta.chainWatchers[keyName];
-    if (chainNodes) { finishChains(chainNodes); }
-
-    addDependentKeys(this, obj, keyName, meta);
-  } else {
-    ret = this.func.apply(obj, args);
-  }
-
-  return ret;
+  return originalGet.apply(target, arguments);
 };
 
 var get      = Ember.get,
@@ -179,7 +171,7 @@ Ember.auto = function (func) {
 
 (function() {
 
-Ember.auto.VERSION = "0.0.1a";
+Ember.auto.VERSION = "0.1.0";
 
 if (Ember.libraries) {
   Ember.libraries.register("Ember Auto", Ember.auto.VERSION);

@@ -1,6 +1,6 @@
 #= require jquery
 
-#= require handlebars
+#= require ember-template-compiler
 #= require ember
 
 #= require ember-auto
