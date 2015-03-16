@@ -10,20 +10,20 @@
     {{content.length}}
   </span>
 
-  {{ view Ember.TextField
+  {{ input
      placeholder="Filter"
      value=searchTerm }}
 
   <ul>
-    {{#each filteredTweets}}
-      <li {{bindAttr class="odd"}} {{action selectTweet this}} >
+    {{#each tweet in filteredTweets}}
+      <li {{bind-attr class="tweet.odd"}} {{action "selectTweet" tweet}} >
         <div>
           <div class="time">
-            {{time}}
+            {{tweet.time}}
           </div>
 
           <div class="text">
-            {{text}}
+            {{tweet.text}}
           </div>
         </div>
       </li>

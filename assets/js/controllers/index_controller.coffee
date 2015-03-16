@@ -1,8 +1,7 @@
 App.IndexController = Ember.ArrayController.extend
-  content            : []
   filteredTweets     : []
 
-  maxStoredTweets    : 2000
+  maxStoredTweets    : 5000
   maxDisplayedTweets : 40
   searchTerm         : ""
 
@@ -18,7 +17,7 @@ App.IndexController = Ember.ArrayController.extend
   addTweet: (tweet)->
     @pushObject tweet
     @filterTweet   tweet unless @paused
-    @popObject() if @get("content.length") > @maxStoredTweets
+    @popObject() if @get("model.length") > @maxStoredTweets
 
   term: Em.auto "searchTerm", (term)-> term.toLowerCase()
 
@@ -33,7 +32,7 @@ App.IndexController = Ember.ArrayController.extend
   filterTweets: (->
     @set "filteredTweets", []
 
-    for tweet in @get("content")
+    for tweet in @get("model")
       @filterTweet tweet
       break if @filteredTweets.length >= @maxDisplayedTweets
   ).observes "searchTerm"
