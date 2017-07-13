@@ -30,7 +30,7 @@ requireHTTPS = (req, res, next)->
 app = connect()
   .use(requireHTTPS)
   .use(require('connect-assets')())
-  .use(connect.static('public'))
+  .use(require('serve-static')('public'))
   .use((req, res)->
     res.writeHead 200
     res.end """
@@ -78,13 +78,13 @@ class Tweet
     @country = data.place?.country
 
 
-ntwitter = new require('ntwitter')
+twitter = new require('twitter')
   consumer_key        : process.env.CONSUMER_KEY
   consumer_secret     : process.env.CONSUMER_SECRET
   access_token_key    : process.env.ACCESS_TOKEN_KEY
   access_token_secret : process.env.ACCESS_TOKEN_SECRET
 
-ntwitter.stream 'statuses/filter',
+twitter.stream 'statuses/filter',
   locations: "-180,-90,180,90",
   (stream)->
     stream.on 'data', (data)->
