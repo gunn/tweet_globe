@@ -12,3 +12,20 @@ A 3D interactive globe of live tweets. See it running at https://tweet-globe.her
 
 #### Client
 `assets/js/application.coffee` includes the tree of files that make up the client. The client is an ember app that uses D3.js to plot the tweet data from the server onto a globe.
+
+## To run
+
+You must have a `.env` file to contain your twitter api credentials:
+```
+ACCESS_TOKEN_KEY=XXXXXXXX-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+ACCESS_TOKEN_SECRET=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+CONSUMER_KEY=XXXXXXXXXXXXXXXXXXXXX
+CONSUMER_SECRET=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+PORT=1337
+```
+
+Install dependencies and launch the server:
+```
+npm install
+npm start
+```
