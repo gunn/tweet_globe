@@ -55,7 +55,7 @@ class Tweet
 
   @bufferSize  : 20
   @historySize : 100
-  @maxRate     : 5
+  @maxRate     : 8
 
   @add: (data)->
     @buffer.unshift new Tweet(data)
@@ -88,13 +88,12 @@ twitter.stream 'statuses/filter',
   locations: "-180,-90,180,90",
   (stream)->
     stream.on 'data', (data)->
-
       if data.geo?.coordinates?
         Tweet.add data
 
+    stream.on 'error', (e)-> console.error e
 
 io = require('socket.io').listen app
-io.set('log level', 0)
 
 io.sockets.on 'connection', (socket)->
   socket.emit "news", Tweet.history
