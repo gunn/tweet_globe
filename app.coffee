@@ -48,6 +48,8 @@ app = connect()
     """
   ).listen(process.env.PORT || 1337)
 
+console.log "Listening on port", (process.env.PORT || 1337)
+
 
 class Tweet
   @buffer      : []
