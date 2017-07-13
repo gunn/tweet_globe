@@ -3,12 +3,13 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "coffee app.coffee"
+    "start": "node ./node_modules/foreman/nf.js start"
   },
   "dependencies": {
     "coffee-script": "^1.12.6",
     "connect": "^3.6.2",
     "connect-assets": "^5.4.0",
+    "foreman": "^2.0.0",
     "serve-static": "^1.12.3",
     "socket.io": "^2.0.3",
     "twitter": "^1.7.1"
