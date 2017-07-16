@@ -29,7 +29,20 @@ requireHTTPS = (req, res, next)->
 
 app = connect()
   .use(requireHTTPS)
-  .use(require('connect-assets')())
+
+[getJs, getCss] =
+  if process.env.NODE_ENV != "production"
+    manifest = require "./public/assets/manifest.json"
+
+    js  = (name)-> "<script src='/assets/#{manifest.assets[name+'.js']}'></script>"
+    css = (name)-> "<link rel='stylesheet' href='/assets/#{manifest.assets[name+'.css']}'/>"
+    [js, css]
+
+  else
+    app = app.use require('connect-assets')()
+    [js, css]
+
+app = app
   .use(require('serve-static')('public'))
   .use((req, res)->
     res.writeHead 200
@@ -38,11 +51,11 @@ app = connect()
     <html>
       <head>
         <title>Tweet Globe</title>
-        #{css("application")}
+        #{getCss("application")}
       </head>
       <body>
         #{hbsTags()}
-        #{js("application")}
+        #{getJs("application")}
       </body>
     </html>
     """

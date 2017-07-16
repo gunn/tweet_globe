@@ -1,0 +1,90 @@
+{
+  "assets": {
+    "application.js": "application-ca423754ac623934f2a812021d29c5ca.js",
+    "d3.js": "d3-815d4b5044a55c3b118fe85a63b54c05.js",
+    "ember-auto.js": "ember-auto-28b10eaecd7150b8d81dc977735fac56.js",
+    "ember-template-compiler.js": "ember-template-compiler-7791d89fa5123a743d8761a286cb62db.js",
+    "ember.js": "ember-0a2c0755c045768f01169ca33c61b6a5.js",
+    "jquery.js": "jquery-bf945f81066f465c0a8f04eae061d054.js",
+    "sample_tweets.js": "sample_tweets-c35ed012ce860537456101e1cf52d625.js",
+    "socket.io.js": "socket.io-caea39fc26f622b102c7ac3cff1886f4.js",
+    "templates.handlebars": "templates-4ade56a4c720cf8a2ad3f3fdb0fe80fa.handlebars",
+    "topojson.js": "topojson-f76d134a2890531874ae6654b4703864.js",
+    "tweet_globe.js": "tweet_globe-8e51d2180a0264e89bab2b931c003d5a.js",
+    "application.css": "application-35f4320ab2a8014bd5d1a61306fdb6a3.css"
+  },
+  "files": {
+    "application-ca423754ac623934f2a812021d29c5ca.js": {
+      "logical_path": "application.js",
+      "mtime": "2017-07-13T04:00:14.000Z",
+      "size": 835636,
+      "digest": "ca423754ac623934f2a812021d29c5ca"
+    },
+    "d3-815d4b5044a55c3b118fe85a63b54c05.js": {
+      "logical_path": "d3.js",
+      "mtime": "2015-03-16T03:56:21.000Z",
+      "size": 151123,
+      "digest": "815d4b5044a55c3b118fe85a63b54c05"
+    },
+    "ember-auto-28b10eaecd7150b8d81dc977735fac56.js": {
+      "logical_path": "ember-auto.js",
+      "mtime": "2015-03-16T03:54:16.000Z",
+      "size": 1616,
+      "digest": "28b10eaecd7150b8d81dc977735fac56"
+    },
+    "ember-template-compiler-7791d89fa5123a743d8761a286cb62db.js": {
+      "logical_path": "ember-template-compiler.js",
+      "mtime": "2015-03-16T03:42:12.000Z",
+      "size": 112499,
+      "digest": "7791d89fa5123a743d8761a286cb62db"
+    },
+    "ember-0a2c0755c045768f01169ca33c61b6a5.js": {
+      "logical_path": "ember.js",
+      "mtime": "2015-03-16T05:23:00.000Z",
+      "size": 381785,
+      "digest": "0a2c0755c045768f01169ca33c61b6a5"
+    },
+    "jquery-bf945f81066f465c0a8f04eae061d054.js": {
+      "logical_path": "jquery.js",
+      "mtime": "2015-03-16T03:58:04.000Z",
+      "size": 96622,
+      "digest": "bf945f81066f465c0a8f04eae061d054"
+    },
+    "sample_tweets-c35ed012ce860537456101e1cf52d625.js": {
+      "logical_path": "sample_tweets.js",
+      "mtime": "2015-03-16T03:23:31.000Z",
+      "size": 16017,
+      "digest": "c35ed012ce860537456101e1cf52d625"
+    },
+    "socket.io-caea39fc26f622b102c7ac3cff1886f4.js": {
+      "logical_path": "socket.io.js",
+      "mtime": "2017-07-13T03:40:31.000Z",
+      "size": 61175,
+      "digest": "caea39fc26f622b102c7ac3cff1886f4"
+    },
+    "templates-4ade56a4c720cf8a2ad3f3fdb0fe80fa.handlebars": {
+      "logical_path": "templates.handlebars",
+      "mtime": "2015-03-16T04:34:25.000Z",
+      "size": 610,
+      "digest": "4ade56a4c720cf8a2ad3f3fdb0fe80fa"
+    },
+    "topojson-f76d134a2890531874ae6654b4703864.js": {
+      "logical_path": "topojson.js",
+      "mtime": "2015-03-16T03:23:31.000Z",
+      "size": 5716,
+      "digest": "f76d134a2890531874ae6654b4703864"
+    },
+    "tweet_globe-8e51d2180a0264e89bab2b931c003d5a.js": {
+      "logical_path": "tweet_globe.js",
+      "mtime": "2015-03-16T03:23:31.000Z",
+      "size": 414,
+      "digest": "8e51d2180a0264e89bab2b931c003d5a"
+    },
+    "application-35f4320ab2a8014bd5d1a61306fdb6a3.css": {
+      "logical_path": "application.css",
+      "mtime": "2015-03-16T03:23:31.000Z",
+      "size": 1044,
+      "digest": "35f4320ab2a8014bd5d1a61306fdb6a3"
+    }
+  }
+}
