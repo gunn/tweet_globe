@@ -31,7 +31,7 @@ app = connect()
   .use(requireHTTPS)
 
 [getJs, getCss] =
-  if process.env.NODE_ENV != "production"
+  if process.env.NODE_ENV == "production"
     manifest = require "./public/assets/manifest.json"
 
     js  = (name)-> "<script src='/assets/#{manifest.assets[name+'.js']}'></script>"
